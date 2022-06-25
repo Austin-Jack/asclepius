@@ -1,4 +1,4 @@
-package com.asclepius.asclepius;
+package com.asclepius;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
