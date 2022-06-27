@@ -48,3 +48,4 @@ bin-release/
 *.ntvs*
 *.njsproj
 *.sln
+target
