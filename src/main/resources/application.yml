@@ -1,0 +1,13 @@
+server:
+  port: 80
+spring:
+  application:
+    name: asclepius
+  redis:
+    host: localhost
+    port: 9995
+    lettuce:
+      shutdown-timeout: 3000
+      pool:
+        max-active: 8
+    password: thisispassword
