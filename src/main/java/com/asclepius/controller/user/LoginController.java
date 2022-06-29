@@ -38,6 +38,9 @@ public class LoginController {
 			User user = new User();
 			user.setAccountId(openID);
 			userService.createOrUpdate(user);
+
+			// 添加token
+
 		} else {
 			result.setCode(ResponseCode.UNPROCESSABLE_ENTITY);
 		}
