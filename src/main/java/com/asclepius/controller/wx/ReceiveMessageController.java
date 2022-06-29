@@ -24,7 +24,7 @@ public class ReceiveMessageController {
 	@Qualifier("wxMessageServiceImpl")
 	WxMessageService wxMessageService;
 
-	@PostMapping(value = "/check", consumes = "text/xml", produces = "text/xml;charset=utf-8")
+	@PostMapping(value = "/message", consumes = "text/xml", produces = "text/xml;charset=utf-8")
 	public String messageHandle(@RequestBody WxTextMessage received) {
 		WxTextMessage resultMessage = new WxTextMessage();
 		resultMessage.setToUserName(received.getFromUserName());

@@ -26,6 +26,7 @@ public class LoginControllerTest {
 
 	@MockBean
 	LoginService loginService;
+
 	String userId;
 
 
