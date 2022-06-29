@@ -1,0 +1,304 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.asclepius.mapper.AppointmentMapper">
+  <resultMap id="BaseResultMap" type="com.asclepius.pojo.Appointment">
+    <id column="ap_id" jdbcType="INTEGER" property="apId" />
+    <result column="c_id" jdbcType="INTEGER" property="cId" />
+    <result column="ap_num" jdbcType="INTEGER" property="apNum" />
+    <result column="ap_time" jdbcType="BIGINT" property="apTime" />
+    <result column="doc_name" jdbcType="VARCHAR" property="docName" />
+    <result column="d_name" jdbcType="VARCHAR" property="dName" />
+    <result column="c_name" jdbcType="VARCHAR" property="cName" />
+    <result column="ap_cost" jdbcType="REAL" property="apCost" />
+    <result column="ap_status" jdbcType="INTEGER" property="apStatus" />
+    <result column="s_id" jdbcType="INTEGER" property="sId" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    ap_id, c_id, ap_num, ap_time, doc_name, d_name, c_name, ap_cost, ap_status, s_id
+  </sql>
+  <select id="selectByExample" parameterType="com.asclepius.pojo.AppointmentExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from appointment
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from appointment
+    where ap_id = #{apId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from appointment
+    where ap_id = #{apId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.asclepius.pojo.AppointmentExample">
+    delete from appointment
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.asclepius.pojo.Appointment">
+    insert into appointment (ap_id, c_id, ap_num, 
+      ap_time, doc_name, d_name, 
+      c_name, ap_cost, ap_status, 
+      s_id)
+    values (#{apId,jdbcType=INTEGER}, #{cId,jdbcType=INTEGER}, #{apNum,jdbcType=INTEGER}, 
+      #{apTime,jdbcType=BIGINT}, #{docName,jdbcType=VARCHAR}, #{dName,jdbcType=VARCHAR}, 
+      #{cName,jdbcType=VARCHAR}, #{apCost,jdbcType=REAL}, #{apStatus,jdbcType=INTEGER}, 
+      #{sId,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.asclepius.pojo.Appointment">
+    insert into appointment
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="apId != null">
+        ap_id,
+      </if>
+      <if test="cId != null">
+        c_id,
+      </if>
+      <if test="apNum != null">
+        ap_num,
+      </if>
+      <if test="apTime != null">
+        ap_time,
+      </if>
+      <if test="docName != null">
+        doc_name,
+      </if>
+      <if test="dName != null">
+        d_name,
+      </if>
+      <if test="cName != null">
+        c_name,
+      </if>
+      <if test="apCost != null">
+        ap_cost,
+      </if>
+      <if test="apStatus != null">
+        ap_status,
+      </if>
+      <if test="sId != null">
+        s_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="apId != null">
+        #{apId,jdbcType=INTEGER},
+      </if>
+      <if test="cId != null">
+        #{cId,jdbcType=INTEGER},
+      </if>
+      <if test="apNum != null">
+        #{apNum,jdbcType=INTEGER},
+      </if>
+      <if test="apTime != null">
+        #{apTime,jdbcType=BIGINT},
+      </if>
+      <if test="docName != null">
+        #{docName,jdbcType=VARCHAR},
+      </if>
+      <if test="dName != null">
+        #{dName,jdbcType=VARCHAR},
+      </if>
+      <if test="cName != null">
+        #{cName,jdbcType=VARCHAR},
+      </if>
+      <if test="apCost != null">
+        #{apCost,jdbcType=REAL},
+      </if>
+      <if test="apStatus != null">
+        #{apStatus,jdbcType=INTEGER},
+      </if>
+      <if test="sId != null">
+        #{sId,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.asclepius.pojo.AppointmentExample" resultType="java.lang.Long">
+    select count(*) from appointment
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update appointment
+    <set>
+      <if test="row.apId != null">
+        ap_id = #{row.apId,jdbcType=INTEGER},
+      </if>
+      <if test="row.cId != null">
+        c_id = #{row.cId,jdbcType=INTEGER},
+      </if>
+      <if test="row.apNum != null">
+        ap_num = #{row.apNum,jdbcType=INTEGER},
+      </if>
+      <if test="row.apTime != null">
+        ap_time = #{row.apTime,jdbcType=BIGINT},
+      </if>
+      <if test="row.docName != null">
+        doc_name = #{row.docName,jdbcType=VARCHAR},
+      </if>
+      <if test="row.dName != null">
+        d_name = #{row.dName,jdbcType=VARCHAR},
+      </if>
+      <if test="row.cName != null">
+        c_name = #{row.cName,jdbcType=VARCHAR},
+      </if>
+      <if test="row.apCost != null">
+        ap_cost = #{row.apCost,jdbcType=REAL},
+      </if>
+      <if test="row.apStatus != null">
+        ap_status = #{row.apStatus,jdbcType=INTEGER},
+      </if>
+      <if test="row.sId != null">
+        s_id = #{row.sId,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="example != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update appointment
+    set ap_id = #{row.apId,jdbcType=INTEGER},
+      c_id = #{row.cId,jdbcType=INTEGER},
+      ap_num = #{row.apNum,jdbcType=INTEGER},
+      ap_time = #{row.apTime,jdbcType=BIGINT},
+      doc_name = #{row.docName,jdbcType=VARCHAR},
+      d_name = #{row.dName,jdbcType=VARCHAR},
+      c_name = #{row.cName,jdbcType=VARCHAR},
+      ap_cost = #{row.apCost,jdbcType=REAL},
+      ap_status = #{row.apStatus,jdbcType=INTEGER},
+      s_id = #{row.sId,jdbcType=INTEGER}
+    <if test="example != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.asclepius.pojo.Appointment">
+    update appointment
+    <set>
+      <if test="cId != null">
+        c_id = #{cId,jdbcType=INTEGER},
+      </if>
+      <if test="apNum != null">
+        ap_num = #{apNum,jdbcType=INTEGER},
+      </if>
+      <if test="apTime != null">
+        ap_time = #{apTime,jdbcType=BIGINT},
+      </if>
+      <if test="docName != null">
+        doc_name = #{docName,jdbcType=VARCHAR},
+      </if>
+      <if test="dName != null">
+        d_name = #{dName,jdbcType=VARCHAR},
+      </if>
+      <if test="cName != null">
+        c_name = #{cName,jdbcType=VARCHAR},
+      </if>
+      <if test="apCost != null">
+        ap_cost = #{apCost,jdbcType=REAL},
+      </if>
+      <if test="apStatus != null">
+        ap_status = #{apStatus,jdbcType=INTEGER},
+      </if>
+      <if test="sId != null">
+        s_id = #{sId,jdbcType=INTEGER},
+      </if>
+    </set>
+    where ap_id = #{apId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.asclepius.pojo.Appointment">
+    update appointment
+    set c_id = #{cId,jdbcType=INTEGER},
+      ap_num = #{apNum,jdbcType=INTEGER},
+      ap_time = #{apTime,jdbcType=BIGINT},
+      doc_name = #{docName,jdbcType=VARCHAR},
+      d_name = #{dName,jdbcType=VARCHAR},
+      c_name = #{cName,jdbcType=VARCHAR},
+      ap_cost = #{apCost,jdbcType=REAL},
+      ap_status = #{apStatus,jdbcType=INTEGER},
+      s_id = #{sId,jdbcType=INTEGER}
+    where ap_id = #{apId,jdbcType=INTEGER}
+  </update>
+  <select id="selectByExampleWithRowbounds" parameterType="com.asclepius.pojo.AppointmentExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from appointment
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+</mapper>
