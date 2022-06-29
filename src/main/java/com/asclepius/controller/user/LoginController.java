@@ -2,9 +2,13 @@ package com.asclepius.controller.user;
 
 import com.asclepius.common.ResponseCode;
 import com.asclepius.pojo.R;
+import com.asclepius.pojo.User;
 import com.asclepius.service.LoginService;
+import com.asclepius.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import javax.annotation.Resource;
 
 /**
  * LoginController
@@ -22,12 +26,18 @@ public class LoginController {
 		this.loginService = loginService;
 	}
 
+	@Resource
+	UserService userService;
+
 	@GetMapping("/{code}")
 	public R login(@PathVariable("code") String code) {
 		R result = new R();
 		String openID;
 		if ((openID = loginService.verify(code)) != null) {
 			result.setMessage(openID);
+			User user = new User();
+			user.setAccountId(openID);
+			userService.createOrUpdate(user);
 		} else {
 			result.setCode(ResponseCode.UNPROCESSABLE_ENTITY);
 		}

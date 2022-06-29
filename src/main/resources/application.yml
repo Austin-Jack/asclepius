@@ -11,3 +11,5 @@ spring:
       pool:
         max-active: 8
     password: thisispassword
+  profiles:
+    active: dev

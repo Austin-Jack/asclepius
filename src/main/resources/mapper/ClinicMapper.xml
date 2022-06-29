@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.asclepius.mapper.ClinicMapper">
+  <resultMap id="BaseResultMap" type="com.asclepius.pojo.Clinic">
+    <id column="cli_id" jdbcType="INTEGER" property="cliId" />
+    <result column="cli_name" jdbcType="VARCHAR" property="cliName" />
+    <result column="cli_level" jdbcType="INTEGER" property="cliLevel" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    cli_id, cli_name, cli_level
+  </sql>
+  <select id="selectByExample" parameterType="com.asclepius.pojo.ClinicExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from clinic
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from clinic
+    where cli_id = #{cliId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from clinic
+    where cli_id = #{cliId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.asclepius.pojo.ClinicExample">
+    delete from clinic
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.asclepius.pojo.Clinic">
+    insert into clinic (cli_id, cli_name, cli_level
+      )
+    values (#{cliId,jdbcType=INTEGER}, #{cliName,jdbcType=VARCHAR}, #{cliLevel,jdbcType=INTEGER}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.asclepius.pojo.Clinic">
+    insert into clinic
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="cliId != null">
+        cli_id,
+      </if>
+      <if test="cliName != null">
+        cli_name,
+      </if>
+      <if test="cliLevel != null">
+        cli_level,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="cliId != null">
+        #{cliId,jdbcType=INTEGER},
+      </if>
+      <if test="cliName != null">
+        #{cliName,jdbcType=VARCHAR},
+      </if>
+      <if test="cliLevel != null">
+        #{cliLevel,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.asclepius.pojo.ClinicExample" resultType="java.lang.Long">
+    select count(*) from clinic
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update clinic
+    <set>
+      <if test="row.cliId != null">
+        cli_id = #{row.cliId,jdbcType=INTEGER},
+      </if>
+      <if test="row.cliName != null">
+        cli_name = #{row.cliName,jdbcType=VARCHAR},
+      </if>
+      <if test="row.cliLevel != null">
+        cli_level = #{row.cliLevel,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="example != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update clinic
+    set cli_id = #{row.cliId,jdbcType=INTEGER},
+      cli_name = #{row.cliName,jdbcType=VARCHAR},
+      cli_level = #{row.cliLevel,jdbcType=INTEGER}
+    <if test="example != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.asclepius.pojo.Clinic">
+    update clinic
+    <set>
+      <if test="cliName != null">
+        cli_name = #{cliName,jdbcType=VARCHAR},
+      </if>
+      <if test="cliLevel != null">
+        cli_level = #{cliLevel,jdbcType=INTEGER},
+      </if>
+    </set>
+    where cli_id = #{cliId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.asclepius.pojo.Clinic">
+    update clinic
+    set cli_name = #{cliName,jdbcType=VARCHAR},
+      cli_level = #{cliLevel,jdbcType=INTEGER}
+    where cli_id = #{cliId,jdbcType=INTEGER}
+  </update>
+  <select id="selectByExampleWithRowbounds" parameterType="com.asclepius.pojo.ClinicExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from clinic
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+</mapper>
