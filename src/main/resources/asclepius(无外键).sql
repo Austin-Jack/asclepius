@@ -11,7 +11,7 @@
  Target Server Version : 80029
  File Encoding         : 65001
 
- Date: 30/06/2022 08:46:12
+ Date: 30/06/2022 14:13:22
 */
 
 SET NAMES utf8mb4;
@@ -191,7 +191,6 @@ CREATE TABLE `schedule` (
                             `s_id` int NOT NULL AUTO_INCREMENT COMMENT '本表主键',
                             `doc_id` int NOT NULL COMMENT '医生表外键',
                             `sc_start_time` bigint NOT NULL COMMENT '排班开始时间',
-                            `sc_end_time` bigint NOT NULL COMMENT '排班结束时间',
                             `doc_price` float NOT NULL COMMENT '预约价格',
                             `num` int NOT NULL DEFAULT '30' COMMENT '可预约数量',
                             PRIMARY KEY (`s_id`),
@@ -202,16 +201,16 @@ CREATE TABLE `schedule` (
 -- Records of schedule
 -- ----------------------------
 BEGIN;
-INSERT INTO `schedule` (`s_id`, `doc_id`, `sc_start_time`, `sc_end_time`, `doc_price`, `num`) VALUES (1, 9, 61615643400000, 61615654200000, 35, 30);
-INSERT INTO `schedule` (`s_id`, `doc_id`, `sc_start_time`, `sc_end_time`, `doc_price`, `num`) VALUES (2, 2, 61616161800000, 61616172600000, 10, 50);
-INSERT INTO `schedule` (`s_id`, `doc_id`, `sc_start_time`, `sc_end_time`, `doc_price`, `num`) VALUES (3, 6, 61615837800000, 61615848600000, 35, 30);
-INSERT INTO `schedule` (`s_id`, `doc_id`, `sc_start_time`, `sc_end_time`, `doc_price`, `num`) VALUES (4, 3, 61615751400000, 61615762200000, 35, 30);
-INSERT INTO `schedule` (`s_id`, `doc_id`, `sc_start_time`, `sc_end_time`, `doc_price`, `num`) VALUES (5, 4, 61615665000000, 61615675800000, 25, 40);
-INSERT INTO `schedule` (`s_id`, `doc_id`, `sc_start_time`, `sc_end_time`, `doc_price`, `num`) VALUES (6, 5, 61615989000000, 61615999800000, 10, 50);
-INSERT INTO `schedule` (`s_id`, `doc_id`, `sc_start_time`, `sc_end_time`, `doc_price`, `num`) VALUES (7, 2, 61615643400000, 61615654200000, 10, 50);
-INSERT INTO `schedule` (`s_id`, `doc_id`, `sc_start_time`, `sc_end_time`, `doc_price`, `num`) VALUES (8, 9, 61616010600000, 61616021400000, 35, 30);
-INSERT INTO `schedule` (`s_id`, `doc_id`, `sc_start_time`, `sc_end_time`, `doc_price`, `num`) VALUES (9, 2, 61615902600000, 61615913400000, 10, 50);
-INSERT INTO `schedule` (`s_id`, `doc_id`, `sc_start_time`, `sc_end_time`, `doc_price`, `num`) VALUES (10, 7, 61615924200000, 61615935000000, 10, 50);
+INSERT INTO `schedule` (`s_id`, `doc_id`, `sc_start_time`, `doc_price`, `num`) VALUES (1, 9, 61615643400000, 35, 30);
+INSERT INTO `schedule` (`s_id`, `doc_id`, `sc_start_time`, `doc_price`, `num`) VALUES (2, 2, 61616161800000, 10, 50);
+INSERT INTO `schedule` (`s_id`, `doc_id`, `sc_start_time`, `doc_price`, `num`) VALUES (3, 6, 61615837800000, 35, 30);
+INSERT INTO `schedule` (`s_id`, `doc_id`, `sc_start_time`, `doc_price`, `num`) VALUES (4, 3, 61615751400000, 35, 30);
+INSERT INTO `schedule` (`s_id`, `doc_id`, `sc_start_time`, `doc_price`, `num`) VALUES (5, 4, 61615665000000, 25, 40);
+INSERT INTO `schedule` (`s_id`, `doc_id`, `sc_start_time`, `doc_price`, `num`) VALUES (6, 5, 61615989000000, 10, 50);
+INSERT INTO `schedule` (`s_id`, `doc_id`, `sc_start_time`, `doc_price`, `num`) VALUES (7, 2, 61615643400000, 10, 50);
+INSERT INTO `schedule` (`s_id`, `doc_id`, `sc_start_time`, `doc_price`, `num`) VALUES (8, 9, 61616010600000, 35, 30);
+INSERT INTO `schedule` (`s_id`, `doc_id`, `sc_start_time`, `doc_price`, `num`) VALUES (9, 2, 61615902600000, 10, 50);
+INSERT INTO `schedule` (`s_id`, `doc_id`, `sc_start_time`, `doc_price`, `num`) VALUES (10, 7, 61615924200000, 10, 50);
 COMMIT;
 
 -- ----------------------------
