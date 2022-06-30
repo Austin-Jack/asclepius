@@ -11,7 +11,7 @@
  Target Server Version : 80029
  File Encoding         : 65001
 
- Date: 30/06/2022 14:13:22
+ Date: 30/06/2022 15:29:28
 */
 
 SET NAMES utf8mb4;
@@ -143,6 +143,7 @@ CREATE TABLE `doctor` (
                           `doc_sex` int NOT NULL COMMENT '医生性别，1表示男，0表示女',
                           `doc_rank` int NOT NULL COMMENT '医生等级',
                           `doc_image` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL COMMENT '医生照片',
+                          `doc_detail` varchar(1000) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL COMMENT '医生详情信息',
                           PRIMARY KEY (`doc_id`),
                           KEY `doctor_FK` (`d_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
@@ -151,16 +152,16 @@ CREATE TABLE `doctor` (
 -- Records of doctor
 -- ----------------------------
 BEGIN;
-INSERT INTO `doctor` (`doc_id`, `d_id`, `doc_name`, `doc_sex`, `doc_rank`, `doc_image`) VALUES (1, 2, '李斌', 1, 1, NULL);
-INSERT INTO `doctor` (`doc_id`, `d_id`, `doc_name`, `doc_sex`, `doc_rank`, `doc_image`) VALUES (2, 8, '游鹏', 1, 0, NULL);
-INSERT INTO `doctor` (`doc_id`, `d_id`, `doc_name`, `doc_sex`, `doc_rank`, `doc_image`) VALUES (3, 2, '饶磊', 1, 2, NULL);
-INSERT INTO `doctor` (`doc_id`, `d_id`, `doc_name`, `doc_sex`, `doc_rank`, `doc_image`) VALUES (4, 10, '潘娟', 0, 1, NULL);
-INSERT INTO `doctor` (`doc_id`, `d_id`, `doc_name`, `doc_sex`, `doc_rank`, `doc_image`) VALUES (5, 3, '王荣', 1, 0, NULL);
-INSERT INTO `doctor` (`doc_id`, `d_id`, `doc_name`, `doc_sex`, `doc_rank`, `doc_image`) VALUES (6, 10, '陈萍', 0, 2, NULL);
-INSERT INTO `doctor` (`doc_id`, `d_id`, `doc_name`, `doc_sex`, `doc_rank`, `doc_image`) VALUES (7, 7, '陈勇', 1, 0, NULL);
-INSERT INTO `doctor` (`doc_id`, `d_id`, `doc_name`, `doc_sex`, `doc_rank`, `doc_image`) VALUES (8, 4, '张玉英', 0, 2, NULL);
-INSERT INTO `doctor` (`doc_id`, `d_id`, `doc_name`, `doc_sex`, `doc_rank`, `doc_image`) VALUES (9, 9, '杨丽娟', 0, 2, NULL);
-INSERT INTO `doctor` (`doc_id`, `d_id`, `doc_name`, `doc_sex`, `doc_rank`, `doc_image`) VALUES (10, 8, '黄丽华', 0, 0, NULL);
+INSERT INTO `doctor` (`doc_id`, `d_id`, `doc_name`, `doc_sex`, `doc_rank`, `doc_image`, `doc_detail`) VALUES (1, 2, '李斌', 1, 1, NULL, NULL);
+INSERT INTO `doctor` (`doc_id`, `d_id`, `doc_name`, `doc_sex`, `doc_rank`, `doc_image`, `doc_detail`) VALUES (2, 8, '游鹏', 1, 0, NULL, NULL);
+INSERT INTO `doctor` (`doc_id`, `d_id`, `doc_name`, `doc_sex`, `doc_rank`, `doc_image`, `doc_detail`) VALUES (3, 2, '饶磊', 1, 2, NULL, NULL);
+INSERT INTO `doctor` (`doc_id`, `d_id`, `doc_name`, `doc_sex`, `doc_rank`, `doc_image`, `doc_detail`) VALUES (4, 10, '潘娟', 0, 1, NULL, NULL);
+INSERT INTO `doctor` (`doc_id`, `d_id`, `doc_name`, `doc_sex`, `doc_rank`, `doc_image`, `doc_detail`) VALUES (5, 3, '王荣', 1, 0, NULL, NULL);
+INSERT INTO `doctor` (`doc_id`, `d_id`, `doc_name`, `doc_sex`, `doc_rank`, `doc_image`, `doc_detail`) VALUES (6, 10, '陈萍', 0, 2, NULL, NULL);
+INSERT INTO `doctor` (`doc_id`, `d_id`, `doc_name`, `doc_sex`, `doc_rank`, `doc_image`, `doc_detail`) VALUES (7, 7, '陈勇', 1, 0, NULL, NULL);
+INSERT INTO `doctor` (`doc_id`, `d_id`, `doc_name`, `doc_sex`, `doc_rank`, `doc_image`, `doc_detail`) VALUES (8, 4, '张玉英', 0, 2, NULL, NULL);
+INSERT INTO `doctor` (`doc_id`, `d_id`, `doc_name`, `doc_sex`, `doc_rank`, `doc_image`, `doc_detail`) VALUES (9, 9, '杨丽娟', 0, 2, NULL, NULL);
+INSERT INTO `doctor` (`doc_id`, `d_id`, `doc_name`, `doc_sex`, `doc_rank`, `doc_image`, `doc_detail`) VALUES (10, 8, '黄丽华', 0, 0, NULL, NULL);
 COMMIT;
 
 -- ----------------------------
