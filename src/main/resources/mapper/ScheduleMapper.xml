@@ -5,7 +5,6 @@
     <id column="s_id" jdbcType="INTEGER" property="sId" />
     <result column="doc_id" jdbcType="INTEGER" property="docId" />
     <result column="sc_start_time" jdbcType="BIGINT" property="scStartTime" />
-    <result column="sc_end_time" jdbcType="BIGINT" property="scEndTime" />
     <result column="doc_price" jdbcType="REAL" property="docPrice" />
     <result column="num" jdbcType="INTEGER" property="num" />
   </resultMap>
@@ -68,7 +67,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    s_id, doc_id, sc_start_time, sc_end_time, doc_price, num
+    s_id, doc_id, sc_start_time, doc_price, num
   </sql>
   <select id="selectByExample" parameterType="com.asclepius.pojo.ScheduleExample" resultMap="BaseResultMap">
     select
@@ -102,11 +101,9 @@
   </delete>
   <insert id="insert" parameterType="com.asclepius.pojo.Schedule">
     insert into schedule (s_id, doc_id, sc_start_time, 
-      sc_end_time, doc_price, num
-      )
+      doc_price, num)
     values (#{sId,jdbcType=INTEGER}, #{docId,jdbcType=INTEGER}, #{scStartTime,jdbcType=BIGINT}, 
-      #{scEndTime,jdbcType=BIGINT}, #{docPrice,jdbcType=REAL}, #{num,jdbcType=INTEGER}
-      )
+      #{docPrice,jdbcType=REAL}, #{num,jdbcType=INTEGER})
   </insert>
   <insert id="insertSelective" parameterType="com.asclepius.pojo.Schedule">
     insert into schedule
@@ -119,9 +116,6 @@
       </if>
       <if test="scStartTime != null">
         sc_start_time,
-      </if>
-      <if test="scEndTime != null">
-        sc_end_time,
       </if>
       <if test="docPrice != null">
         doc_price,
@@ -139,9 +133,6 @@
       </if>
       <if test="scStartTime != null">
         #{scStartTime,jdbcType=BIGINT},
-      </if>
-      <if test="scEndTime != null">
-        #{scEndTime,jdbcType=BIGINT},
       </if>
       <if test="docPrice != null">
         #{docPrice,jdbcType=REAL},
@@ -169,9 +160,6 @@
       <if test="row.scStartTime != null">
         sc_start_time = #{row.scStartTime,jdbcType=BIGINT},
       </if>
-      <if test="row.scEndTime != null">
-        sc_end_time = #{row.scEndTime,jdbcType=BIGINT},
-      </if>
       <if test="row.docPrice != null">
         doc_price = #{row.docPrice,jdbcType=REAL},
       </if>
@@ -188,7 +176,6 @@
     set s_id = #{row.sId,jdbcType=INTEGER},
       doc_id = #{row.docId,jdbcType=INTEGER},
       sc_start_time = #{row.scStartTime,jdbcType=BIGINT},
-      sc_end_time = #{row.scEndTime,jdbcType=BIGINT},
       doc_price = #{row.docPrice,jdbcType=REAL},
       num = #{row.num,jdbcType=INTEGER}
     <if test="example != null">
@@ -204,9 +191,6 @@
       <if test="scStartTime != null">
         sc_start_time = #{scStartTime,jdbcType=BIGINT},
       </if>
-      <if test="scEndTime != null">
-        sc_end_time = #{scEndTime,jdbcType=BIGINT},
-      </if>
       <if test="docPrice != null">
         doc_price = #{docPrice,jdbcType=REAL},
       </if>
@@ -220,7 +204,6 @@
     update schedule
     set doc_id = #{docId,jdbcType=INTEGER},
       sc_start_time = #{scStartTime,jdbcType=BIGINT},
-      sc_end_time = #{scEndTime,jdbcType=BIGINT},
       doc_price = #{docPrice,jdbcType=REAL},
       num = #{num,jdbcType=INTEGER}
     where s_id = #{sId,jdbcType=INTEGER}

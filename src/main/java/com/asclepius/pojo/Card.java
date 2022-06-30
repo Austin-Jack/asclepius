@@ -25,12 +25,12 @@ public class Card {
         this.cId = cId;
     }
 
-    public String getIdentityid() {
+    public String getIdentityID() {
         return identityID;
     }
 
-    public void setIdentityid(String identityid) {
-        this.identityID = identityid == null ? null : identityid.trim();
+    public void setIdentityID(String identityID) {
+        this.identityID = identityID == null ? null : identityID.trim();
     }
 
     public Integer getuId() {

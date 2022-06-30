@@ -413,6 +413,146 @@ public class DoctorExample {
             addCriterion("doc_rank not between", value1, value2, "docRank");
             return (Criteria) this;
         }
+
+        public Criteria andDocImageIsNull() {
+            addCriterion("doc_image is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andDocImageIsNotNull() {
+            addCriterion("doc_image is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andDocImageEqualTo(String value) {
+            addCriterion("doc_image =", value, "docImage");
+            return (Criteria) this;
+        }
+
+        public Criteria andDocImageNotEqualTo(String value) {
+            addCriterion("doc_image <>", value, "docImage");
+            return (Criteria) this;
+        }
+
+        public Criteria andDocImageGreaterThan(String value) {
+            addCriterion("doc_image >", value, "docImage");
+            return (Criteria) this;
+        }
+
+        public Criteria andDocImageGreaterThanOrEqualTo(String value) {
+            addCriterion("doc_image >=", value, "docImage");
+            return (Criteria) this;
+        }
+
+        public Criteria andDocImageLessThan(String value) {
+            addCriterion("doc_image <", value, "docImage");
+            return (Criteria) this;
+        }
+
+        public Criteria andDocImageLessThanOrEqualTo(String value) {
+            addCriterion("doc_image <=", value, "docImage");
+            return (Criteria) this;
+        }
+
+        public Criteria andDocImageLike(String value) {
+            addCriterion("doc_image like", value, "docImage");
+            return (Criteria) this;
+        }
+
+        public Criteria andDocImageNotLike(String value) {
+            addCriterion("doc_image not like", value, "docImage");
+            return (Criteria) this;
+        }
+
+        public Criteria andDocImageIn(List<String> values) {
+            addCriterion("doc_image in", values, "docImage");
+            return (Criteria) this;
+        }
+
+        public Criteria andDocImageNotIn(List<String> values) {
+            addCriterion("doc_image not in", values, "docImage");
+            return (Criteria) this;
+        }
+
+        public Criteria andDocImageBetween(String value1, String value2) {
+            addCriterion("doc_image between", value1, value2, "docImage");
+            return (Criteria) this;
+        }
+
+        public Criteria andDocImageNotBetween(String value1, String value2) {
+            addCriterion("doc_image not between", value1, value2, "docImage");
+            return (Criteria) this;
+        }
+
+        public Criteria andDocDetailIsNull() {
+            addCriterion("doc_detail is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andDocDetailIsNotNull() {
+            addCriterion("doc_detail is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andDocDetailEqualTo(String value) {
+            addCriterion("doc_detail =", value, "docDetail");
+            return (Criteria) this;
+        }
+
+        public Criteria andDocDetailNotEqualTo(String value) {
+            addCriterion("doc_detail <>", value, "docDetail");
+            return (Criteria) this;
+        }
+
+        public Criteria andDocDetailGreaterThan(String value) {
+            addCriterion("doc_detail >", value, "docDetail");
+            return (Criteria) this;
+        }
+
+        public Criteria andDocDetailGreaterThanOrEqualTo(String value) {
+            addCriterion("doc_detail >=", value, "docDetail");
+            return (Criteria) this;
+        }
+
+        public Criteria andDocDetailLessThan(String value) {
+            addCriterion("doc_detail <", value, "docDetail");
+            return (Criteria) this;
+        }
+
+        public Criteria andDocDetailLessThanOrEqualTo(String value) {
+            addCriterion("doc_detail <=", value, "docDetail");
+            return (Criteria) this;
+        }
+
+        public Criteria andDocDetailLike(String value) {
+            addCriterion("doc_detail like", value, "docDetail");
+            return (Criteria) this;
+        }
+
+        public Criteria andDocDetailNotLike(String value) {
+            addCriterion("doc_detail not like", value, "docDetail");
+            return (Criteria) this;
+        }
+
+        public Criteria andDocDetailIn(List<String> values) {
+            addCriterion("doc_detail in", values, "docDetail");
+            return (Criteria) this;
+        }
+
+        public Criteria andDocDetailNotIn(List<String> values) {
+            addCriterion("doc_detail not in", values, "docDetail");
+            return (Criteria) this;
+        }
+
+        public Criteria andDocDetailBetween(String value1, String value2) {
+            addCriterion("doc_detail between", value1, value2, "docDetail");
+            return (Criteria) this;
+        }
+
+        public Criteria andDocDetailNotBetween(String value1, String value2) {
+            addCriterion("doc_detail not between", value1, value2, "docDetail");
+            return (Criteria) this;
+        }
     }
 
     public static class Criteria extends GeneratedCriteria {
