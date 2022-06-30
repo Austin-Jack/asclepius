@@ -1,4 +1,4 @@
-package com.asclepius.pojo;
+package com.asclepius.dto;
 
 import com.asclepius.common.ResponseCode;
 import lombok.AllArgsConstructor;
@@ -14,7 +14,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class R {
+public class ResultDTO {
 	private int code = ResponseCode.OK;
 
 	private String message = "";

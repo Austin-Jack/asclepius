@@ -1,7 +1,7 @@
 package com.asclepius.controller.user;
 
 import com.asclepius.common.ResponseCode;
-import com.asclepius.pojo.R;
+import com.asclepius.dto.ResultDTO;
 import com.asclepius.pojo.User;
 import com.asclepius.service.LoginService;
 import com.asclepius.service.UserService;
@@ -30,8 +30,8 @@ public class LoginController {
 	UserService userService;
 
 	@GetMapping("/{code}")
-	public R login(@PathVariable("code") String code) {
-		R result = new R();
+	public ResultDTO login(@PathVariable("code") String code) {
+		ResultDTO result = new ResultDTO();
 		String openID;
 		if ((openID = loginService.verify(code)) != null) {
 			result.setMessage(openID);
