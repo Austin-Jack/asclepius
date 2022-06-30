@@ -7,6 +7,8 @@
     <result column="doc_name" jdbcType="VARCHAR" property="docName" />
     <result column="doc_sex" jdbcType="INTEGER" property="docSex" />
     <result column="doc_rank" jdbcType="INTEGER" property="docRank" />
+    <result column="doc_image" jdbcType="VARCHAR" property="docImage" />
+    <result column="doc_detail" jdbcType="VARCHAR" property="docDetail" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -67,7 +69,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    doc_id, d_id, doc_name, doc_sex, doc_rank
+    doc_id, d_id, doc_name, doc_sex, doc_rank, doc_image, doc_detail
   </sql>
   <select id="selectByExample" parameterType="com.asclepius.pojo.DoctorExample" resultMap="BaseResultMap">
     select
@@ -101,9 +103,11 @@
   </delete>
   <insert id="insert" parameterType="com.asclepius.pojo.Doctor">
     insert into doctor (doc_id, d_id, doc_name, 
-      doc_sex, doc_rank)
+      doc_sex, doc_rank, doc_image, 
+      doc_detail)
     values (#{docId,jdbcType=INTEGER}, #{dId,jdbcType=INTEGER}, #{docName,jdbcType=VARCHAR}, 
-      #{docSex,jdbcType=INTEGER}, #{docRank,jdbcType=INTEGER})
+      #{docSex,jdbcType=INTEGER}, #{docRank,jdbcType=INTEGER}, #{docImage,jdbcType=VARCHAR}, 
+      #{docDetail,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.asclepius.pojo.Doctor">
     insert into doctor
@@ -123,6 +127,12 @@
       <if test="docRank != null">
         doc_rank,
       </if>
+      <if test="docImage != null">
+        doc_image,
+      </if>
+      <if test="docDetail != null">
+        doc_detail,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="docId != null">
@@ -139,6 +149,12 @@
       </if>
       <if test="docRank != null">
         #{docRank,jdbcType=INTEGER},
+      </if>
+      <if test="docImage != null">
+        #{docImage,jdbcType=VARCHAR},
+      </if>
+      <if test="docDetail != null">
+        #{docDetail,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -166,6 +182,12 @@
       <if test="row.docRank != null">
         doc_rank = #{row.docRank,jdbcType=INTEGER},
       </if>
+      <if test="row.docImage != null">
+        doc_image = #{row.docImage,jdbcType=VARCHAR},
+      </if>
+      <if test="row.docDetail != null">
+        doc_detail = #{row.docDetail,jdbcType=VARCHAR},
+      </if>
     </set>
     <if test="example != null">
       <include refid="Update_By_Example_Where_Clause" />
@@ -177,7 +199,9 @@
       d_id = #{row.dId,jdbcType=INTEGER},
       doc_name = #{row.docName,jdbcType=VARCHAR},
       doc_sex = #{row.docSex,jdbcType=INTEGER},
-      doc_rank = #{row.docRank,jdbcType=INTEGER}
+      doc_rank = #{row.docRank,jdbcType=INTEGER},
+      doc_image = #{row.docImage,jdbcType=VARCHAR},
+      doc_detail = #{row.docDetail,jdbcType=VARCHAR}
     <if test="example != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -197,6 +221,12 @@
       <if test="docRank != null">
         doc_rank = #{docRank,jdbcType=INTEGER},
       </if>
+      <if test="docImage != null">
+        doc_image = #{docImage,jdbcType=VARCHAR},
+      </if>
+      <if test="docDetail != null">
+        doc_detail = #{docDetail,jdbcType=VARCHAR},
+      </if>
     </set>
     where doc_id = #{docId,jdbcType=INTEGER}
   </update>
@@ -205,7 +235,9 @@
     set d_id = #{dId,jdbcType=INTEGER},
       doc_name = #{docName,jdbcType=VARCHAR},
       doc_sex = #{docSex,jdbcType=INTEGER},
-      doc_rank = #{docRank,jdbcType=INTEGER}
+      doc_rank = #{docRank,jdbcType=INTEGER},
+      doc_image = #{docImage,jdbcType=VARCHAR},
+      doc_detail = #{docDetail,jdbcType=VARCHAR}
     where doc_id = #{docId,jdbcType=INTEGER}
   </update>
   <select id="selectByExampleWithRowbounds" parameterType="com.asclepius.pojo.DoctorExample" resultMap="BaseResultMap">

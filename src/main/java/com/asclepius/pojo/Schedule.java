@@ -7,8 +7,6 @@ public class Schedule {
 
     private Long scStartTime;
 
-    private Long scEndTime;
-
     private Float docPrice;
 
     private Integer num;
@@ -35,14 +33,6 @@ public class Schedule {
 
     public void setScStartTime(Long scStartTime) {
         this.scStartTime = scStartTime;
-    }
-
-    public Long getScEndTime() {
-        return scEndTime;
-    }
-
-    public void setScEndTime(Long scEndTime) {
-        this.scEndTime = scEndTime;
     }
 
     public Float getDocPrice() {

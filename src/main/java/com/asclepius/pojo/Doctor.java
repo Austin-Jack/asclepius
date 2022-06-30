@@ -11,6 +11,10 @@ public class Doctor {
 
     private Integer docRank;
 
+    private String docImage;
+
+    private String docDetail;
+
     public Integer getDocId() {
         return docId;
     }
@@ -49,5 +53,21 @@ public class Doctor {
 
     public void setDocRank(Integer docRank) {
         this.docRank = docRank;
+    }
+
+    public String getDocImage() {
+        return docImage;
+    }
+
+    public void setDocImage(String docImage) {
+        this.docImage = docImage == null ? null : docImage.trim();
+    }
+
+    public String getDocDetail() {
+        return docDetail;
+    }
+
+    public void setDocDetail(String docDetail) {
+        this.docDetail = docDetail == null ? null : docDetail.trim();
     }
 }

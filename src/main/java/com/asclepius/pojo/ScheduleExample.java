@@ -284,66 +284,6 @@ public class ScheduleExample {
             return (Criteria) this;
         }
 
-        public Criteria andScEndTimeIsNull() {
-            addCriterion("sc_end_time is null");
-            return (Criteria) this;
-        }
-
-        public Criteria andScEndTimeIsNotNull() {
-            addCriterion("sc_end_time is not null");
-            return (Criteria) this;
-        }
-
-        public Criteria andScEndTimeEqualTo(Long value) {
-            addCriterion("sc_end_time =", value, "scEndTime");
-            return (Criteria) this;
-        }
-
-        public Criteria andScEndTimeNotEqualTo(Long value) {
-            addCriterion("sc_end_time <>", value, "scEndTime");
-            return (Criteria) this;
-        }
-
-        public Criteria andScEndTimeGreaterThan(Long value) {
-            addCriterion("sc_end_time >", value, "scEndTime");
-            return (Criteria) this;
-        }
-
-        public Criteria andScEndTimeGreaterThanOrEqualTo(Long value) {
-            addCriterion("sc_end_time >=", value, "scEndTime");
-            return (Criteria) this;
-        }
-
-        public Criteria andScEndTimeLessThan(Long value) {
-            addCriterion("sc_end_time <", value, "scEndTime");
-            return (Criteria) this;
-        }
-
-        public Criteria andScEndTimeLessThanOrEqualTo(Long value) {
-            addCriterion("sc_end_time <=", value, "scEndTime");
-            return (Criteria) this;
-        }
-
-        public Criteria andScEndTimeIn(List<Long> values) {
-            addCriterion("sc_end_time in", values, "scEndTime");
-            return (Criteria) this;
-        }
-
-        public Criteria andScEndTimeNotIn(List<Long> values) {
-            addCriterion("sc_end_time not in", values, "scEndTime");
-            return (Criteria) this;
-        }
-
-        public Criteria andScEndTimeBetween(Long value1, Long value2) {
-            addCriterion("sc_end_time between", value1, value2, "scEndTime");
-            return (Criteria) this;
-        }
-
-        public Criteria andScEndTimeNotBetween(Long value1, Long value2) {
-            addCriterion("sc_end_time not between", value1, value2, "scEndTime");
-            return (Criteria) this;
-        }
-
         public Criteria andDocPriceIsNull() {
             addCriterion("doc_price is null");
             return (Criteria) this;
