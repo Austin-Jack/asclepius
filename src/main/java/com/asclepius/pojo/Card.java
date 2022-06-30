@@ -3,7 +3,7 @@ package com.asclepius.pojo;
 public class Card {
     private Integer cId;
 
-    private String identityid;
+    private String identityID;
 
     private Integer uId;
 
@@ -26,11 +26,11 @@ public class Card {
     }
 
     public String getIdentityid() {
-        return identityid;
+        return identityID;
     }
 
     public void setIdentityid(String identityid) {
-        this.identityid = identityid == null ? null : identityid.trim();
+        this.identityID = identityid == null ? null : identityid.trim();
     }
 
     public Integer getuId() {
