@@ -5,10 +5,12 @@ import com.asclepius.dto.ResultDTO;
 import com.asclepius.pojo.User;
 import com.asclepius.service.LoginService;
 import com.asclepius.service.UserService;
+import com.asclepius.utils.GenToken;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.util.HashMap;
 
 /**
  * LoginController
@@ -37,14 +39,15 @@ public class LoginController {
 			result.setMessage(openID);
 			User user = new User();
 			user.setAccountId(openID);
-			userService.createOrUpdate(user);
-
+			int uId = userService.createOrUpdate(user);
 			// 添加token
-
+			HashMap<String, String> map = new HashMap<>();
+			map.put("token", GenToken.sign(openID));
+			map.put("uId", String.valueOf(uId));
+			result.setData(map);
 		} else {
 			result.setCode(ResponseCode.UNPROCESSABLE_ENTITY);
 		}
-		System.out.println(openID);
 		return result;
 	}
 }
