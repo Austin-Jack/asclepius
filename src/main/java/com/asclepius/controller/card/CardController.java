@@ -13,7 +13,7 @@ import java.util.List;
 
 
 @RestController
-@RequestMapping("/private")
+@RequestMapping("/api/private")
 public class CardController {
 
     @Resource

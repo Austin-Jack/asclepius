@@ -9,5 +9,9 @@ package com.asclepius.common;
 public interface Constants {
 	String CODE_PREFIX = "verifyCode";
 
+	String AUTHORIZATION_HEADER = "Authorization";
+
+	String INTERCEPT_PREFIX = "/api/private/**";
+
 	int VERIFY_LEN = 4;
 }
