@@ -1,5 +1,5 @@
 mvn clean
-mvn package spring-boot:repackage
+mvn package spring-boot:repackage -DskipTests
 
 user='root'
 host='llynsyw.cn'
