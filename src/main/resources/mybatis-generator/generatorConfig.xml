@@ -48,14 +48,14 @@
             <property name="enableSubPackages" value="false" />
         </javaClientGenerator>
         <!-- 指定数据库表 -->
-        <table schema="" tableName="user"></table>
-        <table schema="" tableName="appointment"></table>
+<!--        <table schema="" tableName="user"></table>-->
+<!--        <table schema="" tableName="appointment"></table>-->
         <table schema="" tableName="card"></table>
-        <table schema="" tableName="clinic" ></table>
-        <table schema="" tableName="department" ></table>
-        <table schema="" tableName="doctor" ></table>
-        <table schema="" tableName="prescription" ></table>
-        <table schema="" tableName="schedule" ></table>
+<!--        <table schema="" tableName="clinic" ></table>-->
+<!--        <table schema="" tableName="department" ></table>-->
+<!--        <table schema="" tableName="doctor" ></table>-->
+<!--        <table schema="" tableName="prescription" ></table>-->
+<!--        <table schema="" tableName="schedule" ></table>-->
 
     </context>
 </generatorConfiguration>

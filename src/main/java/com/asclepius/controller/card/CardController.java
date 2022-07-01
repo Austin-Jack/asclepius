@@ -11,12 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.annotation.Resource;
 import java.util.List;
 
-/**
- * @Author: sny
- * @CreateTime: 2022-06-30  15:32
- * @Description: TODO
- * @Version: 1.0
- */
+
 @RestController
 @RequestMapping("/private")
 public class CardController {
@@ -37,7 +32,7 @@ public class CardController {
     }
 
     @PostMapping("/user/addCard")
-    public ResultDTO addCard(CardDTO cardDTO) {
+    public ResultDTO addCard(@RequestBody CardDTO cardDTO) {
         Card card = new Card();
         ResultDTO resultDTO = new ResultDTO();
         BeanUtils.copyProperties(cardDTO, card);
@@ -47,7 +42,7 @@ public class CardController {
         return resultDTO;
     }
 
-    @DeleteMapping("/user/{uId}/{cId}")
+    @DeleteMapping("/user/deleteCard/{uId}/{cId}")
     public ResultDTO deleteCard(@PathVariable(name = "uId") Integer uId, @PathVariable(name = "cId") Integer cId) {
         ResultDTO resultDTO = new ResultDTO();
         if (!cardService.deleteCard(uId, cId)) {
@@ -58,7 +53,7 @@ public class CardController {
     }
 
     @PostMapping("/user/alterCard")
-    public ResultDTO alterCard(CardDTO cardDTO) {
+    public ResultDTO alterCard(@RequestBody CardDTO cardDTO) {
         ResultDTO resultDTO = new ResultDTO();
         if (!cardService.alterCard(cardDTO)) {
             resultDTO.setCode(ResponseCode.NOT_FOUND);
