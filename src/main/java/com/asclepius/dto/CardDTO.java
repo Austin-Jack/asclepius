@@ -5,8 +5,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 /**
- * @Author: sny
- * @CreateTime: 2022-06-30  15:34
+ * @Author sny
+ * @CreateTime 2022-06-30  15:34
  * @Description: TODO
  * @Version: 1.0
  */
@@ -16,6 +16,22 @@ import lombok.NoArgsConstructor;
 public class CardDTO {
 
     private Integer cId;
+
+    public Integer getcId() {
+        return cId;
+    }
+
+    public void setcId(Integer cId) {
+        this.cId = cId;
+    }
+
+    public Integer getuId() {
+        return uId;
+    }
+
+    public void setuId(Integer uId) {
+        this.uId = uId;
+    }
 
     private Integer uId;
 
