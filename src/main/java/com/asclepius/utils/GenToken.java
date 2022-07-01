@@ -10,9 +10,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * @description:JWT生成token
- * @author: sny
- * @date: 2022/6/29 17:31
+ * @description JWT生成token
+ * @author sny
+ * @date 2022/6/29 17:31
  **/
 public class GenToken {
 	// 设置过期时间
