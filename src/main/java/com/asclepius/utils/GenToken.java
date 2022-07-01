@@ -58,10 +58,9 @@ public class GenToken {
 			JWTVerifier verifier = JWT.require(algorithm).build();
 			verifier.verify(token);
 			return true;
-		} catch (Exception e) {
-			e.printStackTrace();
-			return false;
+		} catch (Exception ignored) {
 		}
+		return false;
 	}
 
 	// token解码
