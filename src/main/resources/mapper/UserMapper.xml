@@ -84,7 +84,7 @@
     </if>
   </select>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
-    select 
+    select
     <include refid="Base_Column_List" />
     from user
     where u_id = #{uId,jdbcType=INTEGER}
@@ -99,10 +99,10 @@
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.asclepius.pojo.User">
-    insert into user (u_id, ACCOUNT_ID, GMT_CREATED, 
+  <insert id="insert" parameterType="com.asclepius.pojo.User" useGeneratedKeys="true" keyProperty="uId">
+    insert into user (u_id, ACCOUNT_ID, GMT_CREATED,
       GMT_MODIFIED, balance)
-    values (#{uId,jdbcType=INTEGER}, #{accountId,jdbcType=VARCHAR}, #{gmtCreated,jdbcType=BIGINT}, 
+    values (#{uId,jdbcType=INTEGER}, #{accountId,jdbcType=VARCHAR}, #{gmtCreated,jdbcType=BIGINT},
       #{gmtModified,jdbcType=BIGINT}, #{balance,jdbcType=REAL})
   </insert>
   <insert id="insertSelective" parameterType="com.asclepius.pojo.User">
