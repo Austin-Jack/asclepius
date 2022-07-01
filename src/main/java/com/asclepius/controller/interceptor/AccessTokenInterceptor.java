@@ -1,7 +1,7 @@
 package com.asclepius.controller.interceptor;
 
 
-import com.alibaba.fastjson.JSONObject;
+import cn.hutool.json.JSONObject;
 import com.asclepius.common.Constants;
 import com.asclepius.common.ResponseCode;
 import com.asclepius.utils.GenToken;
@@ -36,10 +36,10 @@ public class AccessTokenInterceptor implements HandlerInterceptor {
 			httpServletResponse.setContentType("application/json; charset=utf-8");
 			out = httpServletResponse.getWriter();
 			JSONObject o = new JSONObject();
-			o.put("code", ResponseCode.FORBIDDEN);
-			o.put("message", "");
-			o.put("data", null);
-			out.println(o.toJSONString());
+			o.set("code", ResponseCode.FORBIDDEN);
+			o.set("message", "");
+			o.set("data", null);
+			out.println(o.toStringPretty());
 		} catch (Exception ignored) {
 		}
 		return false;
