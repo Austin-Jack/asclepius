@@ -2,9 +2,9 @@ package com.asclepius.controller.interceptor;
 
 
 import cn.hutool.json.JSONObject;
-import com.asclepius.common.Constants;
 import com.asclepius.common.ResponseCode;
 import com.asclepius.utils.GenToken;
+import org.springframework.http.HttpHeaders;
 import org.springframework.util.StringUtils;
 import org.springframework.web.servlet.HandlerInterceptor;
 
@@ -22,7 +22,7 @@ import java.io.PrintWriter;
 public class AccessTokenInterceptor implements HandlerInterceptor {
 	@Override
 	public boolean preHandle(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Object o) throws Exception {
-		String accessToken = httpServletRequest.getHeader(Constants.AUTHORIZATION_HEADER);
+		String accessToken = httpServletRequest.getHeader(HttpHeaders.AUTHORIZATION);
 		if (!StringUtils.hasLength(accessToken) || !GenToken.verify(accessToken)) {
 			return extracted(httpServletResponse);
 		}

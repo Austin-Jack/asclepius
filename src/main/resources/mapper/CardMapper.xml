@@ -115,7 +115,7 @@
                 #{telNumber,jdbcType=VARCHAR},
                 #{cStatus,jdbcType=INTEGER})
     </insert>
-    <insert id="insertSelective" parameterType="com.asclepius.pojo.Card">
+    <insert id="insertSelective" parameterType="com.asclepius.pojo.Card" useGeneratedKeys="true" keyProperty="cId">
         insert into card
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="cId != null">

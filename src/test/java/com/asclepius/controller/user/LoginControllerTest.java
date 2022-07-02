@@ -6,6 +6,7 @@ import com.asclepius.pojo.User;
 import com.asclepius.pojo.UserExample;
 import com.asclepius.service.LoginService;
 import com.asclepius.utils.GenToken;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.jupiter.api.MethodOrderer;
@@ -29,6 +30,7 @@ import javax.annotation.Resource;
 import java.util.Objects;
 
 import static com.asclepius.utils.GenerateMockData.generateOpenID;
+import static com.asclepius.utils.GenerateMockData.generateUser;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -50,13 +52,7 @@ public class LoginControllerTest {
 
 	@Before
 	public void setUp() {
-		//预先创建出测试用户
-		String testOpenID = generateOpenID();
-		testUser = new User();
-		testUser.setAccountId(testOpenID);
-		long now = System.currentTimeMillis();
-		testUser.setGmtModified(now);
-		testUser.setGmtCreated(now);
+		testUser = generateUser();
 		userMapper.insert(testUser);
 	}
 
@@ -116,5 +112,10 @@ public class LoginControllerTest {
 				.andExpect(MockMvcResultMatchers.jsonPath("$.data.token").value(Objects.requireNonNull(GenToken.sign(testUser.getAccountId()))))
 				.andDo(MockMvcResultHandlers.print());
 		Assert.isTrue(testUser.getGmtModified() < realUser.getGmtModified());
+	}
+
+	@After
+	public void destroy() {
+		userMapper.deleteByPrimaryKey(testUser.getuId());
 	}
 }
