@@ -10,6 +10,6 @@ spring:
       shutdown-timeout: 3000
       pool:
         max-active: 8
-#    password: thisispassword
+  #    password: thisispassword
   profiles:
     active: test
