@@ -7,6 +7,7 @@ import com.asclepius.service.LoginService;
 import com.asclepius.service.UserService;
 import com.asclepius.utils.GenToken;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -18,7 +19,7 @@ import java.util.HashMap;
  * @author luolinyuan
  * @date 2022/6/27
  **/
-@RequestMapping("/api/login")
+@RequestMapping(value = "/api/login", produces = MediaType.APPLICATION_JSON_VALUE)
 @RestController
 public class LoginController {
 	private LoginService loginService;

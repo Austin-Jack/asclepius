@@ -16,7 +16,7 @@ import java.util.Map;
  **/
 public class GenToken {
 	// 设置过期时间
-	private static final long EXPIRE_TIME = 240 * 60 * 1000;
+	private static final long EXPIRE_TIME = 30 * 60 * 1000;
 	// token秘钥
 	private static final String TOKEN_SECRET = "f26e587c28064d0e855e72c0a6a0e618";
 
