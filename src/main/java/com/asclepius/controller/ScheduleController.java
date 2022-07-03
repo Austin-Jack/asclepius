@@ -1,4 +1,4 @@
-package com.asclepius.controller.schedule;
+package com.asclepius.controller;
 
 import com.asclepius.dto.ResultDTO;
 import com.asclepius.service.ScheduleService;

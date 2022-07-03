@@ -1,7 +1,6 @@
 package com.asclepius.config;
 
 import com.asclepius.common.Constants;
-import com.asclepius.controller.interceptor.AccessTokenInterceptor;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurationSupport;
