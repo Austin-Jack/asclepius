@@ -1,4 +1,4 @@
-package com.asclepius.controller.interceptor;
+package com.asclepius.config;
 
 
 import cn.hutool.json.JSONObject;

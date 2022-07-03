@@ -1,4 +1,4 @@
-package com.asclepius.controller.appointmentController;
+package com.asclepius.controller;
 
 import com.asclepius.common.ResponseCode;
 import com.asclepius.dto.AppointmentDTO;
