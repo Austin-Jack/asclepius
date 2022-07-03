@@ -26,7 +26,7 @@ public class InitRedis {
     RedisTemplate<String, Integer> redisTemplate;
 
     @PostConstruct // 构造函数之后执行
-    public void init(){
+    public void init() {
 
         initRedis();
 
@@ -37,7 +37,7 @@ public class InitRedis {
         List<Schedule> schedules = scheduleMapper.selectByExample(scheduleExample);
         for (Schedule schedule : schedules) {
             redisTemplate.opsForValue().set("sId_" + schedule.getsId(), schedule.getNum());
+            redisTemplate.opsForValue().set("sId_origin_" + schedule.getsId(), schedule.getNum());
         }
-        System.out.println();
     }
 }

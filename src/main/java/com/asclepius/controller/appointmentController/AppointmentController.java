@@ -1,5 +1,6 @@
 package com.asclepius.controller.appointmentController;
 
+import com.asclepius.common.ResponseCode;
 import com.asclepius.dto.AppointmentDTO;
 import com.asclepius.dto.ResultDTO;
 import com.asclepius.service.AppointmentService;
@@ -25,6 +26,15 @@ public class AppointmentController {
 
     @PostMapping("/appointment/add")
     public ResultDTO addAppointment(@RequestBody AppointmentDTO appointmentDTO){
-        return new ResultDTO();
+        ResultDTO resultDTO = new ResultDTO();
+        int res = appointmentService.addAppointment(appointmentDTO);
+        if (res == -1){
+            resultDTO.setCode(ResponseCode.NOT_FOUND);
+            resultDTO.setMessage("预约已满");
+        }else if (res == -2){
+            resultDTO.setData(ResponseCode.NOT_FOUND);
+            resultDTO.setMessage("请不要重复预约");
+        }
+        return resultDTO;
     }
 }

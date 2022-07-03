@@ -3,13 +3,5 @@ server:
 spring:
   application:
     name: asclepius
-  redis:
-    host: localhost
-    port: 6379
-    lettuce:
-      shutdown-timeout: 3000
-      pool:
-        max-active: 8
-  #    password: thisispassword
   profiles:
-    active: test
+    active: dev
