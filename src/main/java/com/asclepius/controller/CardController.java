@@ -6,7 +6,6 @@ import com.asclepius.dto.ResultDTO;
 import com.asclepius.pojo.Card;
 import com.asclepius.service.CardService;
 import org.springframework.beans.BeanUtils;
-import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -14,9 +13,8 @@ import java.util.List;
 
 
 @RestController
-@RequestMapping(value = "/api/private",produces = MediaType.APPLICATION_JSON_VALUE)
+@RequestMapping(value = "/api/private")
 public class CardController {
-
 	@Resource
 	CardService cardService;
 

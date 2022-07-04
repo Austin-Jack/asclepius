@@ -18,7 +18,7 @@ import java.util.Map;
  * @Version 1.0
  */
 
-@RequestMapping(produces = MediaType.APPLICATION_JSON_VALUE)
+@RequestMapping
 @RestController
 public class ScheduleController {
 

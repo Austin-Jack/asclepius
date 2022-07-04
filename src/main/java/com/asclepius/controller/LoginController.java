@@ -19,7 +19,7 @@ import java.util.HashMap;
  * @author luolinyuan
  * @date 2022/6/27
  **/
-@RequestMapping(value = "/api/login", produces = MediaType.APPLICATION_JSON_VALUE)
+@RequestMapping(value = "/api/login",produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
 @RestController
 public class LoginController {
 	private LoginService loginService;

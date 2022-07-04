@@ -8,7 +8,6 @@ import com.asclepius.pojo.Card;
 import com.asclepius.pojo.CardExample;
 import com.asclepius.pojo.User;
 import com.asclepius.utils.GenToken;
-import org.hamcrest.Matcher;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -159,6 +158,7 @@ public class CardControllerTest {
 
 		//	将卡片的信息置为不合法 例如把uId置为-1
 		testCard.setuId(-1);
+		request.content(JSONUtil.toJsonStr(testCard));
 		//发起请求并断言
 		mockMvc.perform(request)
 				.andExpect(MockMvcResultMatchers.status().isOk())
@@ -169,8 +169,11 @@ public class CardControllerTest {
 	@Test
 	@Order(4)
 	public void getCards() throws Exception {
+		MockHttpServletRequestBuilder request =
+				MockMvcRequestBuilders.get(URL_PREFIX + "/getCards?uId=" + testUser.getuId())
+						.headers(headers);
 		//根据接口传入参数
-		mockMvc.perform(MockMvcRequestBuilders.get(URL_PREFIX + "/getCards?uId=" + testUser.getuId()))
+		mockMvc.perform(request)
 				.andExpect(MockMvcResultMatchers.status().isOk())
 				.andExpect(MockMvcResultMatchers.jsonPath("$.code").value(ResponseCode.OK))
 				.andExpect(MockMvcResultMatchers.jsonPath("$.data[0].cId").value(testCard.getcId()))

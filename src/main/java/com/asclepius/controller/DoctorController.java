@@ -17,17 +17,17 @@ import javax.annotation.Resource;
  * @Version 1.0
  */
 @RestController
-@RequestMapping(value = "/doctor", produces = MediaType.APPLICATION_JSON_VALUE)
+@RequestMapping(value = "/doctor")
 public class DoctorController {
 
-    @Resource
-    DoctorService doctorService;
+	@Resource
+	DoctorService doctorService;
 
-    @GetMapping("/{dId}")
-    public ResultDTO getDoctor(@PathVariable(name = "dId") Integer dId){
-        ResultDTO resultDTO = new ResultDTO();
-        resultDTO.setData(doctorService.getDoctorsByDId(dId));
-        return resultDTO;
-    }
+	@GetMapping("/{dId}")
+	public ResultDTO getDoctor(@PathVariable(name = "dId") Integer dId) {
+		ResultDTO resultDTO = new ResultDTO();
+		resultDTO.setData(doctorService.getDoctorsByDId(dId));
+		return resultDTO;
+	}
 
 }
