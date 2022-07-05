@@ -2,7 +2,6 @@ package com.asclepius.controller;
 
 import com.asclepius.dto.ResultDTO;
 import com.asclepius.service.DoctorService;
-import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,7 +16,7 @@ import javax.annotation.Resource;
  * @Version 1.0
  */
 @RestController
-@RequestMapping(value = "/doctor")
+@RequestMapping(value = "/api/doctor")
 public class DoctorController {
 
 	@Resource

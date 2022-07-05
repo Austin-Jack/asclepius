@@ -1,14 +1,17 @@
 package com.asclepius.service;
 
-import com.asclepius.dto.ScheduleDTO;
+import com.asclepius.dto.DoctorScheduleDTO;
+import com.asclepius.mapper.DepartmentMapperExt;
+import com.asclepius.mapper.DoctorMapper;
 import com.asclepius.mapper.ScheduleMapper;
+import com.asclepius.pojo.Doctor;
 import com.asclepius.pojo.Schedule;
 import com.asclepius.pojo.ScheduleExample;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
-import java.util.Date;
-import java.util.List;
+import java.lang.ref.Cleaner;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -19,51 +22,64 @@ import java.util.stream.Collectors;
  */
 @Service
 public class ScheduleService {
-    @Resource
-    ScheduleMapper scheduleMapper;
 
-    public List<ScheduleDTO> getScheduleByDocIdWithBound(int docId, int scope) {
-        ScheduleExample scheduleExample = new ScheduleExample();
-        scheduleExample.createCriteria().andDocIdEqualTo(docId);
-        List<Schedule> schedules = scheduleMapper.selectByExample(scheduleExample);
-        Date now = new Date(System.currentTimeMillis());
-        return schedules.stream().filter((o1) -> {
-                    Date date = new Date(o1.getScStartTime());
-                    long diff = date.getTime() - now.getTime();
-                    return (diff / (1000 * 3600 * 24)) < scope * 7L;
-                })
-                .map((o1) -> {
-                    ScheduleDTO scheduleDTO = new ScheduleDTO();
-                    StringBuilder sb = new StringBuilder();
-                    scheduleDTO.setsId(o1.getsId());
-                    Date date = new Date(o1.getScStartTime());
-                    sb.append(date.getYear() + 1900).append("-").append(date.getMonth() + 1).append("-").append(date.getDate());
-                    switch (date.getDay()) {
-                        case 0:
-                            sb.append(" 周日");
-                            break;
-                        case 1:
-                            sb.append(" 周一");
-                            break;
-                        case 2:
-                            sb.append(" 周二");
-                            break;
-                        case 3:
-                            sb.append(" 周三");
-                            break;
-                        case 4:
-                            sb.append(" 周四");
-                            break;
-                        case 5:
-                            sb.append(" 周五");
-                            break;
-                        case 6:
-                            sb.append(" 周六");
-                            break;
-                    }
-                    sb.append(date.getHours() < 12 ? " 上午" : " 下午");
-                    scheduleDTO.setTime(sb.toString());
-                    return scheduleDTO;
-                }).collect(Collectors.toList());
-    }
+	private static final Long MORNING_WORK_TIME = 144 * 1000 * 100L;
+
+	@Resource
+	ScheduleMapper scheduleMapper;
+
+	@Resource
+	DepartmentMapperExt departmentMapperExt;
+
+	@Resource
+	DoctorMapper doctorMapper;
+
+
+	public DoctorScheduleDTO getScheduleByDocId(Integer dId, Integer docId) {
+		DoctorScheduleDTO dto = departmentMapperExt.getCliByDid(dId);
+		Doctor doctor = doctorMapper.selectByPrimaryKey(docId);
+		dto.setDocName(doctor.getDocName());
+		dto.setDocRank(doctor.getDocRank());
+		ScheduleExample example = new ScheduleExample();
+		example.createCriteria().andDocIdEqualTo(docId).andScStartTimeGreaterThan(System.currentTimeMillis());
+		List<Schedule> schedules = scheduleMapper.selectByExample(example);
+		dto.setTimes(schedules.stream().map(schedule -> {
+			DoctorScheduleDTO.ScheduleTime scheduleTime = new DoctorScheduleDTO.ScheduleTime();
+			scheduleTime.setTime(schedule.getScStartTime() / 1000);
+			scheduleTime.setsId(schedule.getsId());
+			return scheduleTime;
+		}).collect(Collectors.toList()));
+		if (schedules.size() != 0) {
+			dto.setApCost(schedules.get(0).getDocPrice());
+		}
+		return dto;
+	}
+
+	public List<String>[] getDepartmentSchedule(Integer dId) {
+		List<String>[] result = new ArrayList[14];
+		Calendar c1 = Calendar.getInstance();
+		c1.set(Calendar.SECOND, 0);
+		c1.set(Calendar.MILLISECOND, 0);
+		c1.set(Calendar.MINUTE, 0);
+		c1.set(Calendar.HOUR_OF_DAY, 8);
+		int i = 0;
+		do {
+			Long start = c1.getTimeInMillis();
+			Long end = start + MORNING_WORK_TIME;
+			result[i++] = departmentMapperExt.getDepartmentSchedule(dId, start, end);
+			c1.add(Calendar.DAY_OF_MONTH, 1);
+		} while (i < 7);
+		Calendar c2 = Calendar.getInstance();
+		c2.set(Calendar.SECOND, 0);
+		c2.set(Calendar.MILLISECOND, 0);
+		c2.set(Calendar.MINUTE, 0);
+		c2.set(Calendar.HOUR_OF_DAY, 14);
+		do {
+			Long start = c2.getTimeInMillis();
+			Long end = start + MORNING_WORK_TIME;
+			result[i++] = departmentMapperExt.getDepartmentSchedule(dId, start, end);
+			c2.add(Calendar.DAY_OF_MONTH, 1);
+		} while (i < 14);
+		return result;
+	}
 }

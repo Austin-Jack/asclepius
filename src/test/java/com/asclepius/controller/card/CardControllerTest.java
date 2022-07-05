@@ -77,7 +77,7 @@ public class CardControllerTest {
 
 		/*固定这样写*/
 		headers = new HttpHeaders();
-		headers.set(HttpHeaders.AUTHORIZATION, GenToken.sign(testUser.getAccountId()));
+		headers.set(HttpHeaders.AUTHORIZATION, GenToken.sign(testUser.getAccountId(),testUser.getuId()));
 		headers.set(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE);
 
 		//生成用户的虚拟卡

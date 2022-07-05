@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.asclepius.mapper.DepartmentMapperExt">
+    <select id="getCliByDid" parameterType="java.lang.Integer" resultType="com.asclepius.dto.DoctorScheduleDTO">
+        SELECT d.d_name    as dName,
+               c.cli_level as cLevel
+        FROM clinic c,
+             department d
+        WHERE c.cli_id = d.cli_id
+          AND d.d_id = #{dId, jdbcType=INTEGER}
+    </select>
+
+    <select id="getDepartmentSchedule" resultType="java.lang.String">
+        SELECT DISTINCT d.doc_name
+        FROM department,
+             doctor as d,
+             schedule as s
+        WHERE d.d_id = #{dId, jdbcType=INTEGER}
+          and s.doc_id = d.doc_id
+          and s.sc_start_time between #{start, jdbcType=BIGINT} and #{end, jdbcType=BIGINT}
+    </select>
+</mapper>

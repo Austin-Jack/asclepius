@@ -5,6 +5,7 @@ import com.asclepius.dto.CardDTO;
 import com.asclepius.dto.ResultDTO;
 import com.asclepius.pojo.Card;
 import com.asclepius.service.CardService;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.BeanUtils;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,13 +14,13 @@ import java.util.List;
 
 
 @RestController
-@RequestMapping(value = "/api/private")
+@RequestMapping(value = "/api/private/user")
 public class CardController {
 	@Resource
 	CardService cardService;
 
-	@GetMapping("/user/getCards")
-	public ResultDTO getCards(int uId) {
+	@GetMapping("/getCards")
+	public ResultDTO getCards(@Param("uId") int uId) {
 		ResultDTO resultDTO = new ResultDTO();
 		List<CardDTO> cardDTOS = cardService.getCardsByUid(uId);
 		if (cardDTOS.size() == 0) {
@@ -30,7 +31,7 @@ public class CardController {
 		return resultDTO;
 	}
 
-	@PostMapping("/user/addCard")
+	@PostMapping("/addCard")
 	public ResultDTO addCard(@RequestBody CardDTO cardDTO) {
 		Card card = new Card();
 		ResultDTO resultDTO = new ResultDTO();
@@ -41,7 +42,7 @@ public class CardController {
 		return resultDTO;
 	}
 
-	@DeleteMapping("/user/deleteCard/{uId}/{cId}")
+	@DeleteMapping("/deleteCard/{uId}/{cId}")
 	public ResultDTO deleteCard(@PathVariable(name = "uId") Integer uId, @PathVariable(name = "cId") Integer cId) {
 		ResultDTO resultDTO = new ResultDTO();
 		if (!cardService.deleteCard(uId, cId)) {
@@ -51,7 +52,7 @@ public class CardController {
 		return resultDTO;
 	}
 
-	@PostMapping("/user/alterCard")
+	@PostMapping("/alterCard")
 	public ResultDTO alterCard(@RequestBody CardDTO cardDTO) {
 		ResultDTO resultDTO = new ResultDTO();
 		if (!cardService.alterCard(cardDTO)) {
