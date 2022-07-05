@@ -10,8 +10,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * @description JWT生成token
  * @author sny
+ * @description JWT生成token
  * @date 2022/6/29 17:31
  **/
 public class GenToken {
@@ -26,7 +26,7 @@ public class GenToken {
 	 * @param username 根据username（OpenID）生成token
 	 * @return
 	 */
-	public static String sign(String username) {
+	public static String sign(String username, int uId) {
 		try {
 			//过期时间
 			Date date = new Date(System.currentTimeMillis() + EXPIRE_TIME);
@@ -39,6 +39,7 @@ public class GenToken {
 			//携带username信息，生成签名
 			return JWT.create()
 					.withHeader(header)
+					.withClaim("uId", uId)
 					.withClaim("loginName", username)
 					.withExpiresAt(date)
 					.sign(algorithm);

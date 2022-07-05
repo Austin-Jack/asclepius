@@ -42,12 +42,21 @@ public class LoginController {
 			int uId = userService.createOrUpdate(user);
 			// 添加token
 			HashMap<String, String> map = new HashMap<>();
-			map.put("token", GenToken.sign(openID));
+			map.put("token", GenToken.sign(openID, uId));
 			map.put("uId", String.valueOf(uId));
 			result.setData(map);
 		} else {
 			result.setCode(ResponseCode.UNPROCESSABLE_ENTITY);
 		}
 		return result;
+	}
+
+	@GetMapping("/validity/{token}")
+	public ResultDTO validity(@PathVariable String token) {
+		ResultDTO resultDTO = new ResultDTO();
+		if (!GenToken.verify(token)) {
+			resultDTO.setData(ResponseCode.FORBIDDEN);
+		}
+		return resultDTO;
 	}
 }

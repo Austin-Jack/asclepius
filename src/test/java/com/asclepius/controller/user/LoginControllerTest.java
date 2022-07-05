@@ -89,7 +89,7 @@ public class LoginControllerTest {
 				.andExpect(MockMvcResultMatchers.status().isOk())
 				.andExpect(MockMvcResultMatchers.jsonPath("$.code").value(ResponseCode.OK))
 				.andExpect(MockMvcResultMatchers.jsonPath("$.data.uId").value(userMapper.selectByExample(example).get(0).getuId()))
-				.andExpect(MockMvcResultMatchers.jsonPath("$.data.token").value(Objects.requireNonNull(GenToken.sign(testUser.getAccountId()))))
+				.andExpect(MockMvcResultMatchers.jsonPath("$.data.token").value(Objects.requireNonNull(GenToken.sign(testUser.getAccountId(), testUser.getuId()))))
 				.andDo(MockMvcResultHandlers.print());
 	}
 
@@ -109,7 +109,7 @@ public class LoginControllerTest {
 				.andExpect(MockMvcResultMatchers.jsonPath("$.code").value(ResponseCode.OK))
 				.andExpect(MockMvcResultMatchers.jsonPath("$.data.uId").value((realUser =
 						userMapper.selectByExample(example).get(0)).getuId()))
-				.andExpect(MockMvcResultMatchers.jsonPath("$.data.token").value(Objects.requireNonNull(GenToken.sign(testUser.getAccountId()))))
+				.andExpect(MockMvcResultMatchers.jsonPath("$.data.token").value(Objects.requireNonNull(GenToken.sign(testUser.getAccountId(), testUser.getuId()))))
 				.andDo(MockMvcResultHandlers.print());
 		Assert.isTrue(testUser.getGmtModified() < realUser.getGmtModified());
 	}

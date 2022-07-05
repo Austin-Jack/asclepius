@@ -15,7 +15,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class DepartmentDTO {
-	public Integer dId;
+	private Integer dId;
 
-	public String dName;
+	private String dName;
 }
