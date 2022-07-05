@@ -49,3 +49,4 @@ bin-release/
 *.njsproj
 *.sln
 target
+doctor-data
