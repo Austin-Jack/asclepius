@@ -9,20 +9,33 @@ from bs4 import BeautifulSoup
 import pandas as pd
 import os
 import ssl
+import hashlib
+
+path = f'doctor'
+if not os.path.exists(path):
+    os.makedirs(path)
+clinic_name_set = set()
 
 ssl._create_default_https_context = ssl._create_unverified_context
 replace_dic = {'department_neikxx': '内科学系', 'department_xinnk': '心内科',
                'department_huxnk': '呼吸与危重症医学科', 'department_xiaohnk': '消化内科',
                'department_shennk': '肾内科', 'department_xueynk': '血液内科',
                'department_fengsmyk': '风湿免疫科', 'department_ganrnk': '感染内科',
-               'department_putnk': '全科医学科（普通内科）', 'department_zhonglnk': '肿瘤内科',
+               'department_putnk': '全科医学科', 'department_zhonglnk': '肿瘤内科',
                'department_micu': 'MICU', 'department_laonsfbf': '老年医学科',
-               'department_neifmk': '内分泌科', 'department_zhongzylk': '重症医学科（ICU）',
+               'department_neifmk': '内分泌科', 'department_zhongzylk': '重症医学科(ICU)',
                'department_erk': '儿科', 'department_shenjk': '神经科',
                'department_xinlyxk': '心理医学科', 'department_pifk': '皮肤科',
                'department_biantfyk': '变态反应科', 'department_jizk': '急诊科',
                'department_zhongyk': '中医科', 'department_wulyxkfk': '康复医学科',
                'department_yingyb': '临床营养科'}
+
+clinic_dic = {"内科学系": "内科", "心内科": "内科", "呼吸与危重症医学科": "重症科", "消化内科": "内科",
+              "肾内科": "内科", "血液内科": "内科", "风湿免疫科": "免疫科", "感染内科": "内科",
+              "全科医学科": "全科医学科", "肿瘤内科": "内科", "MICU": "重症科", "老年医学科": "老年医学科",
+              "重症医学科(ICU)": "重症科", "儿科": "儿科", "神经科": "精神科", "心理医学科": "精神科",
+              "皮肤科": "外科", "变态反应科": "免疫科", "急诊科": "急诊科", "中医科": "中医科",
+              "康复医学科": "康复医学科", "临床营养科": "临床营养科", "内分泌科": "内科"}
 
 
 # 获取网页源代码文本内容
@@ -54,34 +67,44 @@ def get_department(html):
         link = a.get('href')
         # departmentname = a.string
         href = "https://www.pumch.cn" + link
-        get_depalldoctor(href)
+        get_depalldoctor(href, count)
+
+
+cli_id = 0
 
 
 # 获取医生图片信息
-def get_depalldoctor(url):
+def get_depalldoctor(url, dId):
+    global cli_id
     filename = url.split("/")[-2]  # 获取文件名
     a_soup = BeautifulSoup(get_htmltext(url), 'html.parser')
-    path = f'asclepius-resource{os.sep}{replace_dic[filename]}'
-    print(path)
-    if not os.path.exists(path):  # 路径不存在则创建
-        os.makedirs(path)
     a_divs = a_soup.find_all('div', attrs={'class': 'item'})
     count = 0
     for div in a_divs:
         count += 1
         print('开始处理第{}个医生'.format(count))
-        departmentnamedata.append(replace_dic[filename])
+
         image = div.find('img')
         # 找到属性为'img'的标签
         imageurl = image.get('src')
         inline = div.find('div', attrs={'class': 'h2'})
         inlinestring = inline.string
         inlinestring = inlinestring.replace('\t', '')
-        imagename = path + os.sep + inlinestring + '.jpg'
+        if inlinestring in doctorName_data:
+            continue
+        department_data.append(replace_dic[filename])
+        tmp = clinic_dic[replace_dic[filename]]
+        clinicName.append(tmp)
+        if tmp not in clinic_name_set:
+            clinic_name_set.add(tmp)
+            cli_id += 1
+        clinic_id.append(cli_id)
+        imagename = path + os.sep + hashlib.md5(inlinestring.encode('utf-8')).hexdigest() + '.jpg'
         il = "https://www.pumch.cn" + imageurl
         urlretrieve(url=il, filename=imagename)  # urlretrieve() 方法直接将远程数据下载到本地
         print('下载完成', imagename)
-        imagenamedata.append(imagename)
+        imagePath_data.append(imagename)
+        department_id.append(dId)
         ah = div.find('a')
         l = ah.get('href')
         get_doctormessage("https://www.pumch.cn" + l)
@@ -108,21 +131,23 @@ def get_doctormessage(url):
     else:
         doctorrank = title2[0].string  # 医生职称
         doctorskill = title2[1].string  # 医生擅长
-    doctornamedata.append(doctorname)
-    doctorrankdata.append(doctorrank)
-    doctorskilldata.append(doctorskill)
+    doctorName_data.append(doctorname)
+    rank_data.append(doctorrank)
+    detail_data.append(doctorskill)
 
 
 # 存储data至excel表中
 def savedoctorInfo():
-    dic = {'departmentname': departmentnamedata, 'imagenamedata': imagenamedata, 'doctorname': doctornamedata,
-           'doctorrank': doctorrankdata, 'doctorskill': doctorskilldata}
+    dic = {'clinicId': clinic_id, 'clinicName': clinicName, 'departmentId': department_id,
+           'departmentName': department_data,
+           'imagePath': imagePath_data,
+           'doctorName': doctorName_data, 'rank': rank_data, 'detail': detail_data}
     # 使用pandas库保存数据到本地excel表
-    doctorData = pd.DataFrame(dic)
-    doctorData.to_excel(f'doctorData.xlsx')
+    doctors = pd.DataFrame(dic)
+    doctors.to_excel(f'doctorData.xlsx')
 
 
-departmentnamedata, imagenamedata, doctornamedata, doctorrankdata, doctorskilldata = [], [], [], [], []
+clinic_id, clinicName, department_id, department_data, imagePath_data, doctorName_data, rank_data, detail_data = [], [], [], [], [], [], [], []
 replacedic = {}
 headers = {
     'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) '
