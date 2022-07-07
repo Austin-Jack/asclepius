@@ -23,10 +23,10 @@ public class DoctorController {
 	DoctorService doctorService;
 
 	@GetMapping("/{dId}/{pageNum}")
-	public ResultDTO getDoctor(@PathVariable(name = "dId") int dId, int pageNum) {
+	public ResultDTO getDoctor(@PathVariable(name = "dId") int dId,@PathVariable(name = "pageNum") int pageNum) {
 		ResultDTO resultDTO = new ResultDTO();
-		resultDTO.setData(doctorService.getDoctorsByDId(dId,pageNum));
+		resultDTO.setMessage(String.valueOf(doctorService.getDepartmentDoctorNum(dId)));
+		resultDTO.setData(doctorService.getDoctorsByDId(dId, pageNum));
 		return resultDTO;
 	}
-
 }
