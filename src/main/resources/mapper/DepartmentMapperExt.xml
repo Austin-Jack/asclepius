@@ -19,4 +19,6 @@
           and s.doc_id = d.doc_id
           and s.sc_start_time between #{start, jdbcType=BIGINT} and #{end, jdbcType=BIGINT}
     </select>
+
+
 </mapper>
