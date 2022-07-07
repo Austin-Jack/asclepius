@@ -3,7 +3,9 @@ package com.asclepius.service;
 import com.asclepius.common.Lua;
 import com.asclepius.dto.AppointmentDTO;
 import com.asclepius.mapper.AppointmentMapper;
+import com.asclepius.mapper.AppointmentMapperExt;
 import com.asclepius.pojo.Appointment;
+import com.asclepius.pojo.AppointmentExt;
 import org.springframework.beans.BeanUtils;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.script.DefaultRedisScript;
@@ -11,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.util.Arrays;
+import java.util.List;
 
 /**
  * @Author sny
@@ -22,6 +25,9 @@ import java.util.Arrays;
 public class AppointmentService {
     @Resource
     AppointmentMapper appointmentMapper;
+
+    @Resource
+    AppointmentMapperExt appointmentMapperExt;
 
     @Resource
     RedisTemplate<String, Integer> redisTemplate;
@@ -40,6 +46,10 @@ public class AppointmentService {
             appointmentMapper.insert(appointment);
         }
         return res;
+    }
+
+    public List<AppointmentExt> selectAppointmentByUId(Integer uId) {
+        return appointmentMapperExt.selectAppointmentByUId(uId);
     }
 
 }
