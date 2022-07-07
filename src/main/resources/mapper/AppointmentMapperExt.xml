@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.asclepius.mapper.AppointmentMapperExt">
+    <resultMap id="SelectAppointmentByUId" type="com.asclepius.dto.AppointmentExtDTO">
+        <result property="apId" column="ap_id"/>
+        <result property="patient" column="name"/>
+        <result property="apTime" column="ap_time"/>
+        <result property="docName" column="doc_name"/>
+        <result property="dName" column="d_name"/>
+        <result property="cLevel" column="cli_level"/>
+        <result property="apCost" column="ap_cost"/>
+        <result property="apStatus" column="ap_status"/>
+    </resultMap>
+
+    <select id="selectAppointmentByUId" resultMap="SelectAppointmentByUId">
+        select t3.ap_id,
+               t3.name,
+               t3.ap_time,
+               t3.doc_name,
+               t3.d_name,
+               t3.ap_cost,
+               t3.ap_status,
+               cli.cli_level
+        from (select t2.*, d.cli_id
+              from (select t1.*, doc.d_id
+                    from (select t.*, doc_id
+                          from (select ap.*, c.name
+                                from appointment ap
+                                         join (select c.c_id, c.name
+                                               from card c
+                                               where c.u_id = #{uId}) c
+                                              on ap.c_id = c.c_id) t
+                                   join schedule s
+                                        on t.s_id = s.s_id) t1
+                             join doctor doc
+                                  on t1.doc_id = doc.doc_id) t2
+                       join department d
+                            on t2.d_id = d.d_id) t3
+                 join clinic cli
+                      on t3.cli_id = cli.cli_id
+    </select>
+</mapper>
