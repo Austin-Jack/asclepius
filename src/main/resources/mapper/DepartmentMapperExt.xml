@@ -21,4 +21,15 @@
     </select>
 
 
+    <select id="selectDoctorsByDid" resultType="com.asclepius.dto.DoctorDTO">
+        SELECT doc_id     AS docId,
+               doc_name   AS doc_name,
+               doc_image  AS docImage,
+               doc_rank   AS docRank,
+               doc_detail AS docDetail
+        FROM doctor
+        WHERE doctor.d_id = #{dId, jdbcType=INTEGER}
+            LIMIT #{currIndex, jdbcType=INTEGER}
+            , 8
+    </select>
 </mapper>

@@ -1,12 +1,15 @@
 package com.asclepius.service;
 
+import cn.hutool.core.lang.hash.Hash;
 import com.asclepius.dto.DoctorDTO;
+import com.asclepius.mapper.DepartmentMapperExt;
 import com.asclepius.mapper.DoctorMapper;
 import com.asclepius.pojo.DoctorExample;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.HashMap;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -18,16 +21,22 @@ import java.util.stream.Collectors;
  */
 @Service
 public class DoctorService {
+	private static final int DOCTORS_PAGE_SIZE = 8;
+
 	@Resource
 	DoctorMapper doctorMapper;
 
-	public List<DoctorDTO> getDoctorsByDId(int dId, int pageNum) {
+	@Resource
+	DepartmentMapperExt departmentMapperExt;
+
+
+	public int getDepartmentDoctorNum(int dId) {
 		DoctorExample doctorExample = new DoctorExample();
 		doctorExample.createCriteria().andDIdEqualTo(dId);
-		return doctorMapper.selectByExample(doctorExample).stream().map((o1) -> {
-			DoctorDTO doctorDTO = new DoctorDTO();
-			BeanUtils.copyProperties(o1, doctorDTO);
-			return doctorDTO;
-		}).collect(Collectors.toList());
+		return (int) doctorMapper.countByExample(doctorExample);
+	}
+
+	public List<DoctorDTO> getDoctorsByDId(int dId, int currPage) {
+		return departmentMapperExt.selectDoctorsByDid(dId, (currPage - 1) * DOCTORS_PAGE_SIZE);
 	}
 }
