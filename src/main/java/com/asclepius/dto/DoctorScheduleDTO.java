@@ -28,6 +28,14 @@ public class DoctorScheduleDTO {
 
 	List<ScheduleTime> times;
 
+	public String getdName() {
+		return this.dName;
+	}
+
+	public Integer getcLevel() {
+		return this.cLevel;
+	}
+
 	public static class ScheduleTime {
 		private Integer sId;
 
