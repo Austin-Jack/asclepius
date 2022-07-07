@@ -18,16 +18,16 @@ import java.util.stream.Collectors;
  */
 @Service
 public class DoctorService {
-    @Resource
-    DoctorMapper doctorMapper;
+	@Resource
+	DoctorMapper doctorMapper;
 
-    public List<DoctorDTO> getDoctorsByDId(int dId) {
-        DoctorExample doctorExample = new DoctorExample();
-        doctorExample.createCriteria().andDIdEqualTo(dId);
-        return doctorMapper.selectByExample(doctorExample).stream().map((o1) -> {
-            DoctorDTO doctorDTO = new DoctorDTO();
-            BeanUtils.copyProperties(o1, doctorDTO);
-            return doctorDTO;
-        }).collect(Collectors.toList());
-    }
+	public List<DoctorDTO> getDoctorsByDId(int dId, int pageNum) {
+		DoctorExample doctorExample = new DoctorExample();
+		doctorExample.createCriteria().andDIdEqualTo(dId);
+		return doctorMapper.selectByExample(doctorExample).stream().map((o1) -> {
+			DoctorDTO doctorDTO = new DoctorDTO();
+			BeanUtils.copyProperties(o1, doctorDTO);
+			return doctorDTO;
+		}).collect(Collectors.toList());
+	}
 }

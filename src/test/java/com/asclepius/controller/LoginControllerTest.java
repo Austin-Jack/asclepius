@@ -1,4 +1,4 @@
-package com.asclepius.controller.user;
+package com.asclepius.controller;
 
 import com.asclepius.common.ResponseCode;
 import com.asclepius.mapper.UserMapper;

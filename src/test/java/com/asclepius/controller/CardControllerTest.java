@@ -1,4 +1,4 @@
-package com.asclepius.controller.card;
+package com.asclepius.controller;
 
 import cn.hutool.json.JSONUtil;
 import com.asclepius.common.ResponseCode;
