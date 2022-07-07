@@ -15,6 +15,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class AppointmentDTO {
 
+    private Integer apId;
+
     private Integer cId;
 
     private Long apTime;
