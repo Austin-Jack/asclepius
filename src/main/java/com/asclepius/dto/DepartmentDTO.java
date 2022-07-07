@@ -11,11 +11,26 @@ import lombok.NoArgsConstructor;
  * @author luolinyuan
  * @date 2022/7/3
  **/
-@Data
 @AllArgsConstructor
 @NoArgsConstructor
 public class DepartmentDTO {
 	private Integer dId;
 
-	private String dName;
+	private String name;
+
+	public void setdId(Integer dId) {
+		this.dId = dId;
+	}
+
+	public Integer getdId() {
+		return dId;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public String getName() {
+		return name;
+	}
 }

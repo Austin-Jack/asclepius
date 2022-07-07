@@ -45,7 +45,8 @@ public class DepartmentService {
 			List<Department> departments = departmentMapper.selectByExample(example);
 			List<DepartmentDTO> departmentDTOS = departments.stream().map(department -> {
 				DepartmentDTO departmentDTO = new DepartmentDTO();
-				BeanUtils.copyProperties(department, departmentDTO);
+				departmentDTO.setName(department.getdName());
+				departmentDTO.setdId(department.getdId());
 				return departmentDTO;
 			}).collect(Collectors.toList());
 
