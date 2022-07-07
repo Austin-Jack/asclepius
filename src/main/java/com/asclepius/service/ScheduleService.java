@@ -7,6 +7,7 @@ import com.asclepius.mapper.ScheduleMapper;
 import com.asclepius.pojo.Doctor;
 import com.asclepius.pojo.Schedule;
 import com.asclepius.pojo.ScheduleExample;
+import org.checkerframework.checker.units.qual.C;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -25,6 +26,10 @@ public class ScheduleService {
 
 	private static final Long MORNING_WORK_TIME = 144 * 1000 * 100L;
 
+	private static final int SCHEDULE_SCOPE = 7;
+
+	private static final int NOON_WORK_TIME = 14;
+
 	@Resource
 	ScheduleMapper scheduleMapper;
 
@@ -41,11 +46,15 @@ public class ScheduleService {
 		dto.setDocName(doctor.getDocName());
 		dto.setDocRank(doctor.getDocRank());
 		ScheduleExample example = new ScheduleExample();
-		example.createCriteria().andDocIdEqualTo(docId).andScStartTimeGreaterThan(System.currentTimeMillis());
+		Calendar calendar = Calendar.getInstance();
+		calendar.set(Calendar.HOUR_OF_DAY, NOON_WORK_TIME);
+		calendar.add(Calendar.DAY_OF_MONTH, SCHEDULE_SCOPE);
+		example.createCriteria().andDocIdEqualTo(docId).andScStartTimeBetween(System.currentTimeMillis(),
+				calendar.getTimeInMillis());
 		List<Schedule> schedules = scheduleMapper.selectByExample(example);
 		dto.setTimes(schedules.stream().map(schedule -> {
 			DoctorScheduleDTO.ScheduleTime scheduleTime = new DoctorScheduleDTO.ScheduleTime();
-			scheduleTime.setTime(schedule.getScStartTime() / 1000);
+			scheduleTime.setTime(schedule.getScStartTime());
 			scheduleTime.setsId(schedule.getsId());
 			return scheduleTime;
 		}).collect(Collectors.toList()));

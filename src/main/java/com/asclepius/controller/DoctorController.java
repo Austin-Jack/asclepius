@@ -22,11 +22,11 @@ public class DoctorController {
 	@Resource
 	DoctorService doctorService;
 
-	@GetMapping("/{dId}")
-	public ResultDTO getDoctor(@PathVariable(name = "dId") Integer dId) {
+	@GetMapping("/{dId}/{pageNum}")
+	public ResultDTO getDoctor(@PathVariable(name = "dId") int dId,@PathVariable(name = "pageNum") int pageNum) {
 		ResultDTO resultDTO = new ResultDTO();
-		resultDTO.setData(doctorService.getDoctorsByDId(dId));
+		resultDTO.setMessage(String.valueOf(doctorService.getDepartmentDoctorNum(dId)));
+		resultDTO.setData(doctorService.getDoctorsByDId(dId, pageNum));
 		return resultDTO;
 	}
-
 }
