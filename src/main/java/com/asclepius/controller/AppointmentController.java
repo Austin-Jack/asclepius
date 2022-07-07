@@ -44,4 +44,13 @@ public class AppointmentController {
         resultDTO.setData(appointmentExts);
         return resultDTO;
     }
+
+    @DeleteMapping("/user/cancel/{sId}/{cId}")
+    public ResultDTO deleteAppointment(@PathVariable(name = "sId") Integer sId, @PathVariable(name = "cId") Integer cId){
+        ResultDTO resultDTO = new ResultDTO();
+        if (!appointmentService.cancelAppointment(sId, cId)){
+            resultDTO.setMessage("取消失败");
+        }
+        return resultDTO;
+    }
 }

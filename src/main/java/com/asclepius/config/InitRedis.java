@@ -37,7 +37,6 @@ public class InitRedis {
         List<Schedule> schedules = scheduleMapper.selectByExample(scheduleExample);
         for (Schedule schedule : schedules) {
             redisTemplate.opsForValue().set("sId_" + schedule.getsId(), schedule.getNum());
-            redisTemplate.opsForValue().set("sId_origin_" + schedule.getsId(), schedule.getNum());
         }
     }
 }
