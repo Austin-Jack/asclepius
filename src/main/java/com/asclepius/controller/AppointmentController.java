@@ -2,9 +2,12 @@ package com.asclepius.controller;
 
 import com.asclepius.common.ResponseCode;
 import com.asclepius.dto.AppointmentDTO;
+import com.asclepius.dto.PrescriptionDTO;
 import com.asclepius.dto.ResultDTO;
-import com.asclepius.pojo.AppointmentExt;
+import com.asclepius.dto.AppointmentExtDTO;
 import com.asclepius.service.AppointmentService;
+import com.asclepius.service.PrescriptionService;
+import org.springframework.data.repository.query.Param;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -40,15 +43,15 @@ public class AppointmentController {
     @GetMapping("/user/aplist/{uId}")
     public ResultDTO getAppointmentByUId(@PathVariable(name = "uId") Integer uId) {
         ResultDTO resultDTO = new ResultDTO();
-        List<AppointmentExt> appointmentExts = appointmentService.selectAppointmentByUId(uId);
-        resultDTO.setData(appointmentExts);
+        List<AppointmentExtDTO> appointmentExtDTOS = appointmentService.selectAppointmentByUId(uId);
+        resultDTO.setData(appointmentExtDTOS);
         return resultDTO;
     }
 
     @DeleteMapping("/user/cancel/{sId}/{cId}")
-    public ResultDTO deleteAppointment(@PathVariable(name = "sId") Integer sId, @PathVariable(name = "cId") Integer cId){
+    public ResultDTO deleteAppointment(@PathVariable(name = "sId") Integer sId, @PathVariable(name = "cId") Integer cId) {
         ResultDTO resultDTO = new ResultDTO();
-        if (!appointmentService.cancelAppointment(sId, cId)){
+        if (!appointmentService.cancelAppointment(sId, cId)) {
             resultDTO.setMessage("取消失败");
         }
         return resultDTO;

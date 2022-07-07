@@ -1,4 +1,4 @@
-package com.asclepius.pojo;
+package com.asclepius.dto;
 
 /**
  * @Author sny
@@ -6,7 +6,7 @@ package com.asclepius.pojo;
  * @Description TODO
  * @Version 1.0
  */
-public class AppointmentExt {
+public class AppointmentExtDTO {
     private Integer apId;
 
     private String patient;

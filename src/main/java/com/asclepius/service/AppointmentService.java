@@ -6,7 +6,7 @@ import com.asclepius.mapper.AppointmentMapper;
 import com.asclepius.mapper.AppointmentMapperExt;
 import com.asclepius.pojo.Appointment;
 import com.asclepius.pojo.AppointmentExample;
-import com.asclepius.pojo.AppointmentExt;
+import com.asclepius.dto.AppointmentExtDTO;
 import org.springframework.beans.BeanUtils;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.script.DefaultRedisScript;
@@ -58,7 +58,7 @@ public class AppointmentService {
             AppointmentExample appointmentExample1 = new AppointmentExample();
             appointmentExample1.createCriteria().andSIdEqualTo(sId).andCIdEqualTo(cId).andApStatusEqualTo(0);
             Appointment appointment = appointmentMapper.selectByExample(appointmentExample1).get(0);
-            appointment.setApStatus(3);
+            appointment.setApStatus(2);
             AppointmentExample appointmentExample2 = new AppointmentExample();
             appointmentExample2.createCriteria().andSIdEqualTo(sId).andCIdEqualTo(cId);
             appointment.setApId(null);
@@ -67,7 +67,7 @@ public class AppointmentService {
         return res == 1;
     }
 
-    public List<AppointmentExt> selectAppointmentByUId(Integer uId) {
+    public List<AppointmentExtDTO> selectAppointmentByUId(Integer uId) {
         return appointmentMapperExt.selectAppointmentByUId(uId);
     }
 

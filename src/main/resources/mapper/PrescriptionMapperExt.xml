@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.asclepius.mapper.PrescriptionMapperExt">
+    <resultMap id="selectPrescriptionByUId" type="com.asclepius.dto.PrescriptionDTO">
+        <result property="apId" column="ap_id"/>
+        <result property="patient" column="name"/>
+        <result property="preCost" column="pre_cost"/>
+        <result property="preComment" column="pre_comment"/>
+        <result property="preStatus" column="pre_status"/>
+    </resultMap>
+    <select id="selectPrescriptionByUId" resultMap="selectPrescriptionByUId">
+        select t2.ap_id, t2.name, pre.pre_cost, pre.pre_comment, pre.pre_status
+        from (select t1.*, ap.ap_id
+              from (select c.c_id, c.name
+                    from card c
+                    where c.u_id = #{uId}) t1
+                       join appointment ap
+                            on t1.c_id = ap.c_id and ap.ap_status = 3) t2
+                 join prescription pre
+                      on pre.ap_id = t2.ap_id
+    </select>
+</mapper>
