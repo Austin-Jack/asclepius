@@ -2,6 +2,8 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.asclepius.mapper.AppointmentMapperExt">
     <resultMap id="SelectAppointmentByUId" type="com.asclepius.dto.AppointmentExtDTO">
+        <result property="sId" column="s_id"/>
+        <result property="cId" column="c_id"/>
         <result property="apId" column="ap_id"/>
         <result property="patient" column="name"/>
         <result property="apTime" column="ap_time"/>
@@ -13,7 +15,9 @@
     </resultMap>
 
     <select id="selectAppointmentByUId" resultMap="SelectAppointmentByUId">
-        select t3.ap_id,
+        select t3.c_id,
+               t3.s_id,
+               t3.ap_id,
                t3.name,
                t3.ap_time,
                t3.doc_name,

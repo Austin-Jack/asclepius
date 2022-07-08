@@ -9,6 +9,10 @@ package com.asclepius.dto;
 public class AppointmentExtDTO {
     private Integer apId;
 
+    private Integer cId;
+
+    private Integer sId;
+
     private String patient;
 
     private Long apTime;
@@ -22,6 +26,22 @@ public class AppointmentExtDTO {
     private Float apCost;
 
     private Integer apStatus;
+
+    public Integer getcId() {
+        return cId;
+    }
+
+    public void setcId(Integer cId) {
+        this.cId = cId;
+    }
+
+    public Integer getsId() {
+        return sId;
+    }
+
+    public void setsId(Integer sId) {
+        this.sId = sId;
+    }
 
     public Integer getApId() {
         return apId;
