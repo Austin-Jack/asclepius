@@ -5,7 +5,6 @@ import com.asclepius.dto.CardDTO;
 import com.asclepius.dto.ResultDTO;
 import com.asclepius.pojo.Card;
 import com.asclepius.service.CardService;
-import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.BeanUtils;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,7 +19,7 @@ public class CardController {
 	CardService cardService;
 
 	@GetMapping("/getCards")
-	public ResultDTO getCards(@Param("uId") int uId) {
+	public ResultDTO getCards(@RequestParam("uId") int uId) {
 		ResultDTO resultDTO = new ResultDTO();
 		List<CardDTO> cardDTOS = cardService.getCardsByUid(uId);
 		if (cardDTOS.size() == 0) {
@@ -36,8 +35,10 @@ public class CardController {
 		Card card = new Card();
 		ResultDTO resultDTO = new ResultDTO();
 		BeanUtils.copyProperties(cardDTO, card);
-		if (!cardService.addCard(card)) {
-			resultDTO.setCode(ResponseCode.INTERNAL_SERVER_ERROR);
+		if (cardService.addCard(card)) {
+			resultDTO.setData(cardService.getCardsByUid(cardDTO.getuId()));
+		} else {
+			resultDTO.setCode(ResponseCode.UNPROCESSABLE_ENTITY);
 		}
 		return resultDTO;
 	}
@@ -48,11 +49,14 @@ public class CardController {
 		if (!cardService.deleteCard(uId, cId)) {
 			resultDTO.setCode(ResponseCode.NOT_FOUND);
 			resultDTO.setMessage("uId或cId不合法(不提示给用户)");
+		} else {
+			resultDTO.setData(cardService.getCardsByUid(uId));
 		}
 		return resultDTO;
 	}
 
-	@PostMapping("/alterCard")
+	//@PostMapping("/alterCard")
+	@Deprecated
 	public ResultDTO alterCard(@RequestBody CardDTO cardDTO) {
 		ResultDTO resultDTO = new ResultDTO();
 		if (!cardService.alterCard(cardDTO)) {

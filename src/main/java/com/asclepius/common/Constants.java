@@ -8,6 +8,8 @@ package com.asclepius.common;
  **/
 public interface Constants {
 
+	String VALIDITY_PREFIX = "/api/login/validity";
+
 	String CODE_PREFIX = "verifyCode";
 
 	String INTERCEPT_PREFIX = "/api/private/**";

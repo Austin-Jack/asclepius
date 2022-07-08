@@ -30,6 +30,8 @@ public class ScheduleService {
 
 	private static final int NOON_WORK_TIME = 14;
 
+	private static final String SCHEDULE_TIME_FILED = "sc_start_time";
+
 	@Resource
 	ScheduleMapper scheduleMapper;
 
@@ -51,6 +53,7 @@ public class ScheduleService {
 		calendar.add(Calendar.DAY_OF_MONTH, SCHEDULE_SCOPE);
 		example.createCriteria().andDocIdEqualTo(docId).andScStartTimeBetween(System.currentTimeMillis(),
 				calendar.getTimeInMillis());
+		example.setOrderByClause(SCHEDULE_TIME_FILED);
 		List<Schedule> schedules = scheduleMapper.selectByExample(example);
 		dto.setTimes(schedules.stream().map(schedule -> {
 			DoctorScheduleDTO.ScheduleTime scheduleTime = new DoctorScheduleDTO.ScheduleTime();

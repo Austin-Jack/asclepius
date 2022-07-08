@@ -51,13 +51,9 @@ public class LoginController {
 		return result;
 	}
 
-	//@GetMapping("/validity/{token}")
+	@GetMapping("/validity")
 	@Deprecated
-	public ResultDTO validity(@PathVariable String token) {
-		ResultDTO resultDTO = new ResultDTO();
-		if (!GenToken.verify(token)) {
-			resultDTO.setCode(ResponseCode.FORBIDDEN);
-		}
-		return resultDTO;
+	public ResultDTO validity() {
+		return new ResultDTO();
 	}
 }

@@ -19,7 +19,9 @@ import java.nio.charset.StandardCharsets;
 public class SpringWebConfig extends WebMvcConfigurationSupport {
 	@Override
 	public void addInterceptors(InterceptorRegistry registry) {
-		registry.addInterceptor(new AccessTokenInterceptor()).addPathPatterns(Constants.INTERCEPT_PREFIX);
+		registry.addInterceptor(new AccessTokenInterceptor())
+				.addPathPatterns(Constants.INTERCEPT_PREFIX)
+				.addPathPatterns(Constants.VALIDITY_PREFIX);
 	}
 
 	@Override

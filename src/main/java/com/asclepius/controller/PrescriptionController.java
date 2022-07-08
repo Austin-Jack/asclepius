@@ -3,9 +3,9 @@ package com.asclepius.controller;
 import com.asclepius.dto.PrescriptionDTO;
 import com.asclepius.dto.ResultDTO;
 import com.asclepius.service.PrescriptionService;
-import org.springframework.data.repository.query.Param;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
@@ -24,7 +24,7 @@ public class PrescriptionController {
     PrescriptionService prescriptionService;
 
     @GetMapping("/user/prescribe")
-    public ResultDTO getPrescriptionByUId(@Param(value = "uId") Integer uId) {
+    public ResultDTO getPrescriptionByUId(@RequestParam(value = "uId") Integer uId) {
         ResultDTO resultDTO = new ResultDTO();
         List<PrescriptionDTO> prescriptionDTOS = prescriptionService.selectPrescriptionByUId(uId);
         resultDTO.setData(prescriptionDTOS);

@@ -4,4 +4,4 @@ spring:
   application:
     name: asclepius
   profiles:
-    active: dev
+    active: deploy

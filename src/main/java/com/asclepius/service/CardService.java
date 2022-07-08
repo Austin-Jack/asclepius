@@ -2,6 +2,7 @@ package com.asclepius.service;
 
 import com.asclepius.dto.CardDTO;
 import com.asclepius.mapper.CardMapper;
+import com.asclepius.mapper.UserMapper;
 import com.asclepius.pojo.Card;
 import com.asclepius.pojo.CardExample;
 import org.springframework.beans.BeanUtils;
@@ -19,55 +20,64 @@ import java.util.stream.Collectors;
  */
 @Service
 public class CardService {
-    @Resource
-    CardMapper cardMapper;
+	@Resource
+	CardMapper cardMapper;
 
-    public List<CardDTO> getCardsByUid(int uid) {
-        CardExample cardExample = new CardExample();
-        // 通过用户id查询状态为1的就诊卡
-        cardExample.createCriteria().andUIdEqualTo(uid).andCStatusEqualTo(1);
-        List<Card> cards = cardMapper.selectByExample(cardExample);
-        return cards.stream().map(card -> {
-            CardDTO cardDTO = new CardDTO();
-            BeanUtils.copyProperties(card, cardDTO);
-            return cardDTO;
-        }).collect(Collectors.toList());
-    }
 
-    public boolean addCard(Card card) {
+	public List<CardDTO> getCardsByUid(int uid) {
+		CardExample cardExample = new CardExample();
+		cardExample.createCriteria().andUIdEqualTo(uid).andCStatusEqualTo(1);
+		List<Card> cards = cardMapper.selectByExample(cardExample);
+		return cards.stream().map(card -> {
+			CardDTO cardDTO = new CardDTO();
+			BeanUtils.copyProperties(card, cardDTO);
+			return cardDTO;
+		}).collect(Collectors.toList());
+	}
 
-        int insert = cardMapper.insertSelective(card);
-        return insert == 1;
-    }
+	public boolean addCard(Card card) {
+		int insert = 0;
+		CardExample cardExample = new CardExample();
+		cardExample.createCriteria().andUIdEqualTo(card.getuId()).andNameEqualTo(card.getName()).andCStatusEqualTo(1);
+		cardExample.or(new CardExample().createCriteria().andUIdEqualTo(card.getuId()).andIdentityidEqualTo(card.getIdentityID()).andCStatusEqualTo(1));
+		if (cardMapper.selectByExample(cardExample).size() == 0) {
+			insert = cardMapper.insertSelective(card);
+		}
+		return insert == 1;
+	}
 
-    public boolean deleteCard(int uId, int cId) {
-        CardExample cardExample = new CardExample();
-        // 通过修改就诊卡状态为1进行逻辑删除
-        cardExample.createCriteria().andUIdEqualTo(uId).andCIdEqualTo(cId).andCStatusEqualTo(1);
-        List<Card> cards = cardMapper.selectByExample(cardExample);
-        if (cards.size() == 0) {
-            return false;
-        } else {
-            Card card = cards.get(0);
-            card.setcStatus(0);
-            return cardMapper.updateByExample(card, cardExample) == 1;
-        }
-    }
 
-    public boolean alterCard(CardDTO cardDTO) {
-        CardExample cardExample = new CardExample();
-        cardExample.createCriteria().andUIdEqualTo(cardDTO.getuId()).andCIdEqualTo(cardDTO.getcId()).andCStatusEqualTo(1);
-        List<Card> cards = cardMapper.selectByExample(cardExample);
-        if (cards.size() == 0) {
-            return false;
-        } else {
-            Card card = cards.get(0);
-            card.setSex(cardDTO.getSex());
-            card.setAge(cardDTO.getAge());
-            card.setName(cardDTO.getName());
-            card.setTelNumber(cardDTO.getTelNumber());
-            cardMapper.updateByExample(card, cardExample);
-            return true;
-        }
-    }
+	public boolean deleteCard(int uId, int cId) {
+		CardExample cardExample = new CardExample();
+		cardExample.createCriteria().andUIdEqualTo(uId).andCIdEqualTo(cId).andCStatusEqualTo(1);
+		List<Card> cards = cardMapper.selectByExample(cardExample);
+		if (cards.size() == 0) {
+			return false;
+		} else {
+			Card card = cards.get(0);
+			card.setcStatus(0);
+			return cardMapper.updateByExample(card, cardExample) == 1;
+		}
+	}
+
+	public boolean alterCard(CardDTO cardDTO) {
+		CardExample cardExample = new CardExample();
+		cardExample.createCriteria().andUIdEqualTo(cardDTO.getuId()).andCIdEqualTo(cardDTO.getcId()).andCStatusEqualTo(1);
+		List<Card> cards = cardMapper.selectByExample(cardExample);
+		if (cards.size() == 0) {
+			return false;
+		} else {
+			Card card = cards.get(0);
+			card.setSex(cardDTO.getSex());
+			card.setAge(cardDTO.getAge());
+			card.setName(cardDTO.getName());
+			card.setTelNumber(cardDTO.getTelNumber());
+			cardMapper.updateByExample(card, cardExample);
+			return true;
+		}
+	}
+
+	public Integer queryUIdByCId(Integer cId) {
+		return cardMapper.selectByPrimaryKey(cId).getuId();
+	}
 }
