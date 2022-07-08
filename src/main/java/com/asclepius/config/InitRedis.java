@@ -8,6 +8,7 @@ import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -33,7 +34,11 @@ public class InitRedis {
     }
 
     private void initRedis() {
+        long monthTime = 30 * 24 * 60 * 60 * 1000L;
+        long curTime = new Date().getTime();
+        long threshold = curTime + monthTime;
         ScheduleExample scheduleExample = new ScheduleExample();
+        scheduleExample.createCriteria().andScStartTimeBetween(curTime, threshold);
         List<Schedule> schedules = scheduleMapper.selectByExample(scheduleExample);
         for (Schedule schedule : schedules) {
             redisTemplate.opsForValue().set("sId_" + schedule.getsId(), schedule.getNum());
