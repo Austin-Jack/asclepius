@@ -34,15 +34,19 @@ public class AppointmentService {
     RedisTemplate<String, Integer> redisTemplate;
 
     public int addAppointment(AppointmentDTO appointmentDTO) {
+        // 创建redis脚本并装在lua脚本
         DefaultRedisScript<List> redisScript = new DefaultRedisScript<>();
         redisScript.setResultType(List.class);
         redisScript.setScriptText(Lua.SECOND_KILL);
+        // 执行lua脚本并接受返回值
         List<Long> res = redisTemplate.execute(redisScript, Arrays.asList(String.valueOf(appointmentDTO.getcId()), "sId_" + appointmentDTO.getsId()), (Object) null);
+        // 第一个返回值为剩余数，剩余数大于等于0即预约成功
         Long remain = res.get(0);
         if (remain >= 0) {
             Appointment appointment = new Appointment();
             BeanUtils.copyProperties(appointmentDTO, appointment);
             appointment.setApStatus(0);
+            // 设置预约号
             appointment.setApNum(Integer.parseInt(String.valueOf(res.get(1))));
             appointmentMapper.insert(appointment);
         }
@@ -54,10 +58,12 @@ public class AppointmentService {
         redisScript.setResultType(Long.class);
         redisScript.setScriptText(Lua.CANCEL);
         int res = Integer.parseInt(String.valueOf(redisTemplate.execute(redisScript, Arrays.asList(String.valueOf(cId), "sId_" + sId), (Object) null)));
+        // 当返回值等于1表示取消成功
         if (res == 1) {
             AppointmentExample appointmentExample1 = new AppointmentExample();
             appointmentExample1.createCriteria().andSIdEqualTo(sId).andCIdEqualTo(cId).andApStatusEqualTo(0);
             Appointment appointment = appointmentMapper.selectByExample(appointmentExample1).get(0);
+            // 设置mysql数据库中的预约状态
             appointment.setApStatus(2);
             AppointmentExample appointmentExample2 = new AppointmentExample();
             appointmentExample2.createCriteria().andSIdEqualTo(sId).andCIdEqualTo(cId);
