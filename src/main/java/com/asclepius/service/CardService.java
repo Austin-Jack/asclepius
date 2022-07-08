@@ -24,6 +24,7 @@ public class CardService {
 
     public List<CardDTO> getCardsByUid(int uid) {
         CardExample cardExample = new CardExample();
+        // 通过用户id查询状态为1的就诊卡
         cardExample.createCriteria().andUIdEqualTo(uid).andCStatusEqualTo(1);
         List<Card> cards = cardMapper.selectByExample(cardExample);
         return cards.stream().map(card -> {
@@ -41,6 +42,7 @@ public class CardService {
 
     public boolean deleteCard(int uId, int cId) {
         CardExample cardExample = new CardExample();
+        // 通过修改就诊卡状态为1进行逻辑删除
         cardExample.createCriteria().andUIdEqualTo(uId).andCIdEqualTo(cId).andCStatusEqualTo(1);
         List<Card> cards = cardMapper.selectByExample(cardExample);
         if (cards.size() == 0) {
