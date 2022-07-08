@@ -41,19 +41,22 @@ public class GenSchedule {
 		calendar.set(Calendar.MINUTE, 0);
 		DoctorExample doctorExample = new DoctorExample();
 		doctorMapper.selectByExample(doctorExample);
+		Schedule schedule = new Schedule();
 		for (int i = 0; i < 365; i++) {
 			Long time = calendar.getTimeInMillis();
 			for (int dId = 1; dId <= 23; dId++) {
 				doctorExample.clear();
 				doctorExample.createCriteria().andDIdEqualTo(dId);
 				List<Doctor> doctors = doctorMapper.selectByExample(doctorExample);
-				Schedule schedule = new Schedule();
-				int j = (int) (Math.random() * doctors.size());
-				for (; j < doctors.size(); j++) {
-					schedule.setDocId(doctors.get(j).getDocId());
+				int r1 = (int) (Math.random() * doctors.size());
+				int r2 = (int) (Math.random() * doctors.size());
+				int low = Math.min(r1, r2);
+				int high = Math.max(r1, r2);
+				for (; low <= high; low++) {
+					schedule.setDocId(doctors.get(low).getDocId());
 					schedule.setScStartTime(time);
-					schedule.setNum(Math.random() < 0.5 ? 30 : 50);
-					schedule.setDocPrice(schedule.getNum() == 30 ? 50.0F : 30.0F);
+					schedule.setNum((int) (Math.random() * 40) + 1);
+					schedule.setDocPrice(schedule.getNum() < 15 ? 70.0F : 50.0F);
 					scheduleMapper.insert(schedule);
 				}
 			}
@@ -70,19 +73,22 @@ public class GenSchedule {
 		calendar.set(Calendar.MINUTE, 0);
 		DoctorExample doctorExample = new DoctorExample();
 		doctorMapper.selectByExample(doctorExample);
+		Schedule schedule = new Schedule();
 		for (int i = 0; i < 365; i++) {
 			Long time = calendar.getTimeInMillis();
 			for (int dId = 1; dId <= 23; dId++) {
 				doctorExample.clear();
 				doctorExample.createCriteria().andDIdEqualTo(dId);
 				List<Doctor> doctors = doctorMapper.selectByExample(doctorExample);
-				Schedule schedule = new Schedule();
-				int j = (int) (Math.random() * doctors.size());
-				for (; j < doctors.size(); j++) {
-					schedule.setDocId(doctors.get(j).getDocId());
+				int r1 = (int) (Math.random() * doctors.size());
+				int r2 = (int) (Math.random() * doctors.size());
+				int low = Math.min(r1, r2);
+				int high = Math.max(r1, r2);
+				for (; low <= high; low++) {
+					schedule.setDocId(doctors.get(low).getDocId());
 					schedule.setScStartTime(time);
-					schedule.setNum(Math.random() < 0.5 ? 30 : 50);
-					schedule.setDocPrice(schedule.getNum() == 30 ? 50.0F : 30.0F);
+					schedule.setNum((int) (Math.random() * 40) + 1);
+					schedule.setDocPrice(schedule.getNum() < 15 ? 70.0F : 50.0F);
 					scheduleMapper.insert(schedule);
 				}
 			}
