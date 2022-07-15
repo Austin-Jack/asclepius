@@ -18,6 +18,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.http.HttpHeaders;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
@@ -29,7 +30,6 @@ import javax.annotation.Resource;
 
 import java.util.Objects;
 
-import static com.asclepius.utils.GenerateMockData.generateOpenID;
 import static com.asclepius.utils.GenerateMockData.generateUser;
 
 @RunWith(SpringRunner.class)
@@ -112,6 +112,25 @@ public class LoginControllerTest {
 				.andExpect(MockMvcResultMatchers.jsonPath("$.data.token").value(Objects.requireNonNull(GenToken.sign(testUser.getAccountId(), testUser.getuId()))))
 				.andDo(MockMvcResultHandlers.print());
 		Assert.isTrue(testUser.getGmtModified() < realUser.getGmtModified());
+	}
+
+	/**
+	 * 测试验证token接口
+	 **/
+	@Test
+	public void testValidity() throws Exception {
+		//测试空的token
+		mockMvc.perform(MockMvcRequestBuilders.get("/api/login/validity").header(HttpHeaders.AUTHORIZATION, ""))
+				.andExpect(MockMvcResultMatchers.status().isOk())
+				.andExpect(MockMvcResultMatchers.jsonPath("$.code").value(ResponseCode.FORBIDDEN))
+				.andDo(MockMvcResultHandlers.print());
+
+		// 根据虚拟用户生成token 并带入请求体中
+		mockMvc.perform(MockMvcRequestBuilders.get("/api/login/validity").header(HttpHeaders.AUTHORIZATION,
+						GenToken.sign(testUser.getAccountId(), testUser.getuId())))
+				.andExpect(MockMvcResultMatchers.status().isOk())
+				.andExpect(MockMvcResultMatchers.jsonPath("$.code").value(ResponseCode.OK))
+				.andDo(MockMvcResultHandlers.print());
 	}
 
 	@After
