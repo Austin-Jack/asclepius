@@ -8,10 +8,7 @@ import com.asclepius.pojo.Card;
 import com.asclepius.pojo.CardExample;
 import com.asclepius.pojo.User;
 import com.asclepius.utils.GenToken;
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.*;
 import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.TestMethodOrder;
@@ -139,6 +136,7 @@ public class CardControllerTest {
 	}
 
 	@Test
+	@Ignore
 	@Order(3)
 	public void alterCard() throws Exception {
 		//设置需要修改的内容

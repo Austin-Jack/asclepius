@@ -54,16 +54,17 @@ public class AppointmentController {
 		return resultDTO;
 	}
 
-	@DeleteMapping("/cancel/{sId}/{cId}")
+	@DeleteMapping("/cancel/{sId}/{cId}/{pageNum}")
 	public ResultDTO deleteAppointment(@PathVariable(name = "sId") Integer sId,
-	                                   @PathVariable(name = "cId") Integer cId) {
+	                                   @PathVariable(name = "cId") Integer cId,
+	                                   @PathVariable(name = "pageNum") Integer curPage) {
 		ResultDTO resultDTO = new ResultDTO();
 		if (!appointmentService.cancelAppointment(sId, cId)) {
 			resultDTO.setCode(ResponseCode.NOT_FOUND);
 			resultDTO.setMessage("取消失败");
 		}
-		resultDTO.setData(appointmentService.selectAppointmentByUId(
-				cardService.queryUIdByCId(cId), 1));
+		resultDTO.setData(appointmentService.selectAppointmentByUId(cardService.queryUIdByCId(cId),
+				(curPage - 1) * PAGE_SIZE));
 		return resultDTO;
 	}
 }

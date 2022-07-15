@@ -6,7 +6,7 @@
         <result property="cId" column="c_id"/>
         <result property="apId" column="ap_id"/>
         <result property="patient" column="name"/>
-        <result property="apTime" column="sc_start_time"/>
+        <result property="apTime" column="ap_time"/>
         <result property="docName" column="doc_name"/>
         <result property="dName" column="d_name"/>
         <result property="cLevel" column="cli_level"/>
@@ -19,7 +19,7 @@
                t3.s_id,
                t3.ap_id,
                t3.name,
-               t3.sc_start_time,
+               t3.ap_time,
                t3.doc_name,
                t3.d_name,
                t3.ap_cost,
@@ -42,6 +42,7 @@
                             on t2.d_id = d.d_id) t3
                  join clinic cli
                       on t3.cli_id = cli.cli_id
+                order by t3.ap_time
                     limit #{offset ,jdbcType=INTEGER},3
     </select>
 </mapper>

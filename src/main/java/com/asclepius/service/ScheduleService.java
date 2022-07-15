@@ -7,11 +7,9 @@ import com.asclepius.mapper.ScheduleMapper;
 import com.asclepius.pojo.Doctor;
 import com.asclepius.pojo.Schedule;
 import com.asclepius.pojo.ScheduleExample;
-import org.checkerframework.checker.units.qual.C;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
-import java.lang.ref.Cleaner;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -48,7 +46,7 @@ public class ScheduleService {
 		dto.setDocName(doctor.getDocName());
 		dto.setDocRank(doctor.getDocRank());
 		ScheduleExample example = new ScheduleExample();
-		Calendar calendar = Calendar.getInstance();
+		Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone("GMT+8"));
 		calendar.set(Calendar.HOUR_OF_DAY, NOON_WORK_TIME);
 		calendar.add(Calendar.DAY_OF_MONTH, SCHEDULE_SCOPE);
 		example.createCriteria().andDocIdEqualTo(docId).andScStartTimeBetween(System.currentTimeMillis(),
@@ -69,7 +67,7 @@ public class ScheduleService {
 
 	public List<String>[] getDepartmentSchedule(Integer dId) {
 		List<String>[] result = new ArrayList[14];
-		Calendar c1 = Calendar.getInstance();
+		Calendar c1 = Calendar.getInstance(TimeZone.getTimeZone("GMT+8"));
 		c1.set(Calendar.SECOND, 0);
 		c1.set(Calendar.MILLISECOND, 0);
 		c1.set(Calendar.MINUTE, 0);
@@ -81,7 +79,7 @@ public class ScheduleService {
 			result[i++] = departmentMapperExt.getDepartmentSchedule(dId, start, end);
 			c1.add(Calendar.DAY_OF_MONTH, 1);
 		} while (i < 7);
-		Calendar c2 = Calendar.getInstance();
+		Calendar c2 = Calendar.getInstance(TimeZone.getTimeZone("GMT+8"));
 		c2.set(Calendar.SECOND, 0);
 		c2.set(Calendar.MILLISECOND, 0);
 		c2.set(Calendar.MINUTE, 0);

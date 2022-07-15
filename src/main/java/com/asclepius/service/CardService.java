@@ -2,7 +2,6 @@ package com.asclepius.service;
 
 import com.asclepius.dto.CardDTO;
 import com.asclepius.mapper.CardMapper;
-import com.asclepius.mapper.UserMapper;
 import com.asclepius.pojo.Card;
 import com.asclepius.pojo.CardExample;
 import org.springframework.beans.BeanUtils;

@@ -66,6 +66,7 @@ public class AppointmentService {
 			// 设置预约号
 			appointment.setApNum(Integer.parseInt(String.valueOf(res.get(1))));
 			appointment.setcName(cardMapper.selectByPrimaryKey(appointment.getcId()).getName());
+			appointment.setApTime(System.currentTimeMillis());
 			appointmentMapper.insert(appointment);
 		}
 		return Integer.parseInt(String.valueOf(remain));
