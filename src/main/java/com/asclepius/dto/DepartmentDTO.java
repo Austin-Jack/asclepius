@@ -5,6 +5,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.io.Serializable;
+
 /**
  * DepartmentDTO
  *
@@ -13,7 +15,7 @@ import lombok.NoArgsConstructor;
  **/
 @AllArgsConstructor
 @NoArgsConstructor
-public class DepartmentDTO {
+public class DepartmentDTO implements Serializable {
 	private Integer dId;
 
 	private String name;

@@ -7,6 +7,9 @@ import com.asclepius.mapper.ScheduleMapper;
 import com.asclepius.pojo.Doctor;
 import com.asclepius.pojo.Schedule;
 import com.asclepius.pojo.ScheduleExample;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
+import org.springframework.cache.annotation.Caching;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -65,8 +68,9 @@ public class ScheduleService {
 		return dto;
 	}
 
-	public List<String>[] getDepartmentSchedule(Integer dId) {
-		List<String>[] result = new ArrayList[14];
+	@Cacheable(value = "schedule", condition = "#dId between {1,23}")
+	public String[][] getDepartmentSchedule(Integer dId, String date) {
+		String[][] result = new String[14][];
 		Calendar c1 = Calendar.getInstance(TimeZone.getTimeZone("GMT+8"));
 		c1.set(Calendar.SECOND, 0);
 		c1.set(Calendar.MILLISECOND, 0);
@@ -76,7 +80,7 @@ public class ScheduleService {
 		do {
 			Long start = c1.getTimeInMillis();
 			Long end = start + MORNING_WORK_TIME;
-			result[i++] = departmentMapperExt.getDepartmentSchedule(dId, start, end);
+			result[i++] = departmentMapperExt.getDepartmentSchedule(dId, start, end).toArray(new String[]{});
 			c1.add(Calendar.DAY_OF_MONTH, 1);
 		} while (i < 7);
 		Calendar c2 = Calendar.getInstance(TimeZone.getTimeZone("GMT+8"));
@@ -87,7 +91,7 @@ public class ScheduleService {
 		do {
 			Long start = c2.getTimeInMillis();
 			Long end = start + MORNING_WORK_TIME;
-			result[i++] = departmentMapperExt.getDepartmentSchedule(dId, start, end);
+			result[i++] = departmentMapperExt.getDepartmentSchedule(dId, start, end).toArray(new String[]{});
 			c2.add(Calendar.DAY_OF_MONTH, 1);
 		} while (i < 14);
 		return result;

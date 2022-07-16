@@ -1,16 +1,25 @@
 package com.asclepius.service;
 
+import com.asclepius.dao.VerifyDao;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 /**
- * LoginService
+ * LoginServiceImpl
  *
  * @author luolinyuan
  * @date 2022/6/27
  **/
-public interface LoginService {
-	/**
-	 * 验证登录
-	 * @param code 验证码
-	 * @return java.lang.String 返回的userId 当验证码不存在时返回null
-	  **/
-	public String verify(String code);
+@Service("loginServiceImpl")
+public class LoginService {
+	private VerifyDao verifyDao;
+
+	@Autowired
+	public void setVerifyDao(VerifyDao verifyDao) {
+		this.verifyDao = verifyDao;
+	}
+
+	public String verify(String code) {
+		return verifyDao.Verify(code);
+	}
 }

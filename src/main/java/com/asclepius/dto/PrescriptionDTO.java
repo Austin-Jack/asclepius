@@ -1,12 +1,14 @@
 package com.asclepius.dto;
 
+import java.io.Serializable;
+
 /**
  * @Author sny
  * @CreateTime 2022-07-07  16:06
  * @Description TODO
  * @Version 1.0
  */
-public class PrescriptionDTO {
+public class PrescriptionDTO implements Serializable {
 
     private Integer apId;
 

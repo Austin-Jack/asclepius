@@ -22,11 +22,7 @@ public class CardController {
 	public ResultDTO getCards(@RequestParam("uId") int uId) {
 		ResultDTO resultDTO = new ResultDTO();
 		List<CardDTO> cardDTOS = cardService.getCardsByUid(uId);
-		if (cardDTOS.size() == 0) {
-			resultDTO.setCode(ResponseCode.UNDETERMINED);
-		} else {
-			resultDTO.setData(cardDTOS);
-		}
+		resultDTO.setData(cardDTOS);
 		return resultDTO;
 	}
 

@@ -5,6 +5,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.io.Serializable;
+
 /**
  * 封装返回数据
  *
@@ -14,7 +16,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class ResultDTO {
+public class ResultDTO implements Serializable {
 	private int code = ResponseCode.OK;
 
 	private String message = "";

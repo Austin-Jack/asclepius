@@ -1,17 +1,14 @@
 package com.asclepius.service;
 
-import cn.hutool.core.lang.hash.Hash;
 import com.asclepius.dto.DoctorDTO;
 import com.asclepius.mapper.DepartmentMapperExt;
 import com.asclepius.mapper.DoctorMapper;
 import com.asclepius.pojo.DoctorExample;
-import org.springframework.beans.BeanUtils;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
-import java.util.HashMap;
 import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  * @Author sny
@@ -29,13 +26,14 @@ public class DoctorService {
 	@Resource
 	DepartmentMapperExt departmentMapperExt;
 
-
+	@Cacheable(value = "doctor_num", sync = true, key = "#dId", condition = "#dId between {1,23}")
 	public int getDepartmentDoctorNum(int dId) {
 		DoctorExample doctorExample = new DoctorExample();
 		doctorExample.createCriteria().andDIdEqualTo(dId);
 		return (int) doctorMapper.countByExample(doctorExample);
 	}
 
+	@Cacheable(value = "doctor_list", sync = true, condition = "#dId between {1,23} and #currPage between {1,2}")
 	public List<DoctorDTO> getDoctorsByDId(int dId, int currPage) {
 		return departmentMapperExt.selectDoctorsByDid(dId, (currPage - 1) * DOCTORS_PAGE_SIZE);
 	}

@@ -5,7 +5,6 @@ import com.asclepius.dto.AppointmentDTO;
 import com.asclepius.mapper.AppointmentMapper;
 import com.asclepius.mapper.AppointmentMapperExt;
 import com.asclepius.mapper.CardMapper;
-import com.asclepius.mapper.UserMapper;
 import com.asclepius.pojo.Appointment;
 import com.asclepius.pojo.AppointmentExample;
 import com.asclepius.dto.AppointmentExtDTO;
@@ -36,9 +35,6 @@ public class AppointmentService {
 
 	@Resource
 	RedisTemplate<String, Integer> redisTemplate;
-
-	@Resource
-	UserMapper userMapper;
 
 
 	@Resource

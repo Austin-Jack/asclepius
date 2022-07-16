@@ -1,12 +1,14 @@
 package com.asclepius.dto;
 
+import java.io.Serializable;
+
 /**
  * @Author sny
  * @CreateTime 2022-07-07  09:32
  * @Description TODO
  * @Version 1.0
  */
-public class AppointmentExtDTO {
+public class AppointmentExtDTO implements Serializable {
     private Integer apId;
 
     private Integer cId;
