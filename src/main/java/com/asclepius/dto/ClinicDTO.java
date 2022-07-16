@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,7 +17,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-public class ClinicDTO {
+public class ClinicDTO implements Serializable {
 	public String cliName;
 
 	public List<DepartmentDTO> departments;

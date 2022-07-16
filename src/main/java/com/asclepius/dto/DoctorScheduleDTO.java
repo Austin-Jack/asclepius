@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -15,7 +16,7 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class DoctorScheduleDTO {
+public class DoctorScheduleDTO implements Serializable {
 	private String dName;
 
 	private Integer cLevel;

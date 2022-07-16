@@ -8,7 +8,7 @@ import com.asclepius.pojo.Clinic;
 import com.asclepius.pojo.ClinicExample;
 import com.asclepius.pojo.Department;
 import com.asclepius.pojo.DepartmentExample;
-import org.springframework.beans.BeanUtils;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -30,7 +30,7 @@ public class DepartmentService {
 	@Resource
 	ClinicMapper clinicMapper;
 
-
+	@Cacheable(value = "department", key = "#level", condition = "#level between {0,2}")
 	public List<ClinicDTO> getAllByLevel(Integer level) {
 		List<ClinicDTO> result = new ArrayList<>();
 		ClinicExample clinicExample = new ClinicExample();

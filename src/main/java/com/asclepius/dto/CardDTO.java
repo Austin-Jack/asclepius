@@ -4,6 +4,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.io.Serializable;
+
 /**
  * @Author sny
  * @CreateTime 2022-06-30  15:34
@@ -13,7 +15,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class CardDTO {
+public class CardDTO implements Serializable {
 
     private Integer cId;
 
