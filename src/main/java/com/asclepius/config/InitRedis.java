@@ -8,8 +8,11 @@ import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
-import java.util.Date;
+import java.io.Serializable;
+import java.util.Calendar;
 import java.util.List;
+
+import static com.asclepius.common.Constants.*;
 
 /**
  * @Author sny
@@ -20,28 +23,33 @@ import java.util.List;
 @Component
 public class InitRedis {
 
-    @Resource
-    ScheduleMapper scheduleMapper;
 
-    @Resource
-    RedisTemplate<String, Integer> redisTemplate;
 
-    @PostConstruct // 构造函数之后执行
-    public void init() {
+	@Resource
+	ScheduleMapper scheduleMapper;
 
-        initRedis();
+	@Resource
+	RedisTemplate<String, Serializable> redisTemplate;
 
-    }
+	@PostConstruct // 构造函数之后执行
+	public void init() {
+		initRedis();
+	}
 
-    private void initRedis() {
-        long monthTime = 30 * 24 * 60 * 60 * 1000L;
-        long curTime = new Date().getTime();
-        long threshold = curTime + monthTime;
-        ScheduleExample scheduleExample = new ScheduleExample();
-        scheduleExample.createCriteria().andScStartTimeBetween(curTime, threshold);
-        List<Schedule> schedules = scheduleMapper.selectByExample(scheduleExample);
-        for (Schedule schedule : schedules) {
-            redisTemplate.opsForValue().set("sId_" + schedule.getsId(), schedule.getNum());
-        }
-    }
+	private void initRedis() {
+		//获得七天后下午14点的时间戳
+		Calendar calendar = Calendar.getInstance();
+		calendar.add(Calendar.DAY_OF_MONTH, SCHEDULE_SCOPE);
+		calendar.set(Calendar.HOUR_OF_DAY, NOON_WORKING_TIME);
+		ScheduleExample scheduleExample = new ScheduleExample();
+		//查询这七天范围内的所有排班 PREHEAT_TIME为预热时间
+		scheduleExample.createCriteria().andScStartTimeBetween(System.currentTimeMillis() + PREHEAT_TIME,
+				calendar.getTimeInMillis());
+		List<Schedule> schedules = scheduleMapper.selectByExample(scheduleExample);
+		for (Schedule schedule : schedules) {
+			//当没有这样的key时(多机后端 单机redis) 存入这样的hash
+			redisTemplate.opsForHash().putIfAbsent(HASH_KEY_PREFIX + schedule.getsId(), REMAIN_FILED_KEY, schedule.getNum());
+			redisTemplate.opsForHash().putIfAbsent(HASH_KEY_PREFIX+ schedule.getsId(), TOTAL_FILED_KEY, schedule.getNum());
+		}
+	}
 }

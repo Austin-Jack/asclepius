@@ -1,6 +1,7 @@
 package com.asclepius.config;
 
 import cn.hutool.core.date.DateUtil;
+import com.fasterxml.jackson.databind.ser.std.NumberSerializers;
 import org.springframework.cache.interceptor.KeyGenerator;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -25,12 +26,15 @@ import java.util.Date;
 public class LettuceRedisConfig {
 
 	private static final long CACHE_HOURS = 24;
+
 	@Bean
 	public RedisTemplate<String, Serializable> redisTemplate(LettuceConnectionFactory connectionFactory) {
 		RedisTemplate<String, Serializable> redisTemplate = new RedisTemplate<>();
 		redisTemplate.setConnectionFactory(connectionFactory);
 		redisTemplate.setKeySerializer(new StringRedisSerializer());
 		redisTemplate.setValueSerializer(new GenericJackson2JsonRedisSerializer());
+		redisTemplate.setHashKeySerializer(new StringRedisSerializer());
+		redisTemplate.setHashValueSerializer(new Jackson2JsonRedisSerializer<>(Integer.class));
 		return redisTemplate;
 	}
 

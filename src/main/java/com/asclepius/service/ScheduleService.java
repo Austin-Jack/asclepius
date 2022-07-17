@@ -14,6 +14,8 @@ import javax.annotation.Resource;
 import java.util.*;
 import java.util.stream.Collectors;
 
+import static com.asclepius.common.Constants.*;
+
 /**
  * @Author sny
  * @CreateTime 2022-07-01  16:00
@@ -22,12 +24,6 @@ import java.util.stream.Collectors;
  */
 @Service
 public class ScheduleService {
-
-	private static final Long MORNING_WORK_TIME = 144 * 1000 * 100L;
-
-	private static final int SCHEDULE_SCOPE = 7;
-
-	private static final int NOON_WORK_TIME = 14;
 
 	private static final String SCHEDULE_TIME_FILED = "sc_start_time";
 
@@ -48,7 +44,7 @@ public class ScheduleService {
 		dto.setDocRank(doctor.getDocRank());
 		ScheduleExample example = new ScheduleExample();
 		Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone("GMT+8"));
-		calendar.set(Calendar.HOUR_OF_DAY, NOON_WORK_TIME);
+		calendar.set(Calendar.HOUR_OF_DAY, NOON_WORKING_TIME);
 		calendar.add(Calendar.DAY_OF_MONTH, SCHEDULE_SCOPE);
 		example.createCriteria().andDocIdEqualTo(docId).andScStartTimeBetween(System.currentTimeMillis(),
 				calendar.getTimeInMillis());
@@ -78,7 +74,7 @@ public class ScheduleService {
 		int i = 0;
 		do {
 			Long start = c1.getTimeInMillis();
-			Long end = start + MORNING_WORK_TIME;
+			Long end = start + MORNING_WORK_PERIOD;
 			result[i++] = departmentMapperExt.getDepartmentSchedule(dId, start, end).toArray(new String[]{});
 			c1.add(Calendar.DAY_OF_MONTH, 1);
 		} while (i < 7);
@@ -89,7 +85,7 @@ public class ScheduleService {
 		c2.set(Calendar.HOUR_OF_DAY, 14);
 		do {
 			Long start = c2.getTimeInMillis();
-			Long end = start + MORNING_WORK_TIME;
+			Long end = start + MORNING_WORK_PERIOD;
 			result[i++] = departmentMapperExt.getDepartmentSchedule(dId, start, end).toArray(new String[]{});
 			c2.add(Calendar.DAY_OF_MONTH, 1);
 		} while (i < 14);

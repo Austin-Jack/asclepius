@@ -32,7 +32,7 @@ public class AppointmentController {
 	@PostMapping("/appointment/add")
 	public ResultDTO addAppointment(@RequestBody AppointmentDTO appointmentDTO) {
 		ResultDTO resultDTO = new ResultDTO();
-		int res = appointmentService.addAppointment(appointmentDTO);
+		long res = appointmentService.addAppointment(appointmentDTO);
 		if (res == -1) {
 			resultDTO.setCode(ResponseCode.NOT_FOUND);
 			resultDTO.setMessage("预约已满");
