@@ -26,14 +26,15 @@ public class DoctorService {
 	@Resource
 	DepartmentMapperExt departmentMapperExt;
 
-	@Cacheable(value = "doctor_num", sync = true, key = "#dId", condition = "#dId between {1,23}")
+	@Cacheable(value = "doctorNum", sync = true, key = "#dId", condition = "#dId between {1,23}")
 	public int getDepartmentDoctorNum(int dId) {
 		DoctorExample doctorExample = new DoctorExample();
 		doctorExample.createCriteria().andDIdEqualTo(dId);
 		return (int) doctorMapper.countByExample(doctorExample);
 	}
 
-	@Cacheable(value = "doctor_list", sync = true, condition = "#dId between {1,23} and #currPage between {1,2}")
+	@Cacheable(value = "doctorList", sync = true, condition = "#dId between {1,23} and #currPage between {1,2}",
+			keyGenerator = "doctorKeyGenerator")
 	public List<DoctorDTO> getDoctorsByDId(int dId, int currPage) {
 		return departmentMapperExt.selectDoctorsByDid(dId, (currPage - 1) * DOCTORS_PAGE_SIZE);
 	}

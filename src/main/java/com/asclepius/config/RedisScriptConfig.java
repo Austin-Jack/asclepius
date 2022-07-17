@@ -26,6 +26,7 @@ public class RedisScriptConfig {
 	RedisTemplate<String, Serializable> redisTemplate;
 
 	@Bean
+	@SuppressWarnings("rawtypes")
 	public DefaultRedisScript<List> secondKillScript() {
 		DefaultRedisScript<List> script = new DefaultRedisScript<>();
 		script.setResultType(List.class);

@@ -1,13 +1,11 @@
 package com.asclepius.controller;
 
-import cn.hutool.core.date.DateUtil;
 import com.asclepius.dto.ResultDTO;
 import com.asclepius.dto.DoctorScheduleDTO;
 import com.asclepius.service.ScheduleService;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
-import java.util.Date;
 
 /**
  * @Author sny
@@ -37,7 +35,7 @@ public class ScheduleController {
 	@GetMapping("/department/{dId}")
 	public ResultDTO getDepartmentSchedule(@PathVariable Integer dId) {
 		ResultDTO resultDTO = new ResultDTO();
-		resultDTO.setData(scheduleService.getDepartmentSchedule(dId,DateUtil.formatDate(new Date())));
+		resultDTO.setData(scheduleService.getDepartmentSchedule(dId));
 		return resultDTO;
 	}
 }

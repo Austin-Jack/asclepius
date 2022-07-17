@@ -49,7 +49,7 @@ public class GenToken {
 		}
 	}
 
-	public static boolean verify(String token) {
+	public static Integer verify(String token) {
 		/**
 		 * @desc 验证token，通过返回true
 		 * @params [token]需要校验的串
@@ -57,11 +57,11 @@ public class GenToken {
 		try {
 			Algorithm algorithm = Algorithm.HMAC256(TOKEN_SECRET);
 			JWTVerifier verifier = JWT.require(algorithm).build();
-			verifier.verify(token);
-			return true;
+			DecodedJWT verify = verifier.verify(token);
+			return verify.getClaim("uId").asInt();
 		} catch (Exception ignored) {
 		}
-		return false;
+		return null;
 	}
 
 	// token解码
