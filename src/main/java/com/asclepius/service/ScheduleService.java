@@ -7,9 +7,7 @@ import com.asclepius.mapper.ScheduleMapper;
 import com.asclepius.pojo.Doctor;
 import com.asclepius.pojo.Schedule;
 import com.asclepius.pojo.ScheduleExample;
-import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
-import org.springframework.cache.annotation.Caching;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -68,8 +66,9 @@ public class ScheduleService {
 		return dto;
 	}
 
-	@Cacheable(value = "schedule", condition = "#dId between {1,23}")
-	public String[][] getDepartmentSchedule(Integer dId, String date) {
+	@Cacheable(value = "schedule", condition = "#dId between {1,23}", sync = true,
+			keyGenerator = "scheduleKeyGenerator", cacheManager = "scheduleCacheManager")
+	public String[][] getDepartmentSchedule(Integer dId) {
 		String[][] result = new String[14][];
 		Calendar c1 = Calendar.getInstance(TimeZone.getTimeZone("GMT+8"));
 		c1.set(Calendar.SECOND, 0);

@@ -40,6 +40,7 @@ public class AppointmentService {
 	DefaultRedisScript<Long> cancelAppointmentScript;
 
 	@Resource(name = "secondKillScript")
+	@SuppressWarnings("rawtypes")
 	DefaultRedisScript<List> secondKillScript;
 
 	@Resource
@@ -50,19 +51,19 @@ public class AppointmentService {
 	private static final int EXPIRED = 2;
 	private static final int COMPLETED = 3;
 
+	@SuppressWarnings("unchecked")
 	public int addAppointment(AppointmentDTO appointmentDTO) {
 		// 执行lua脚本并接受返回值
 		List<Long> res = redisTemplate.execute(secondKillScript, Arrays.asList(String.valueOf(appointmentDTO.getcId()),
 				"sId_" + appointmentDTO.getsId()));
 		// 第一个返回值为剩余数，剩余数大于等于0即预约成功
-		Long remain = res.get(0);
+		Long remain = Objects.requireNonNull(res).get(0);
 		if (remain >= 0) {
 			Appointment appointment = new Appointment();
 			BeanUtils.copyProperties(appointmentDTO, appointment);
 			appointment.setApStatus(CREATED);
 			// 设置预约号
 			appointment.setApNum(Integer.parseInt(String.valueOf(res.get(1))));
-			appointment.setcName(cardMapper.selectByPrimaryKey(appointment.getcId()).getName());
 			appointment.setApTime(System.currentTimeMillis());
 			appointmentMapper.insert(appointment);
 		}
