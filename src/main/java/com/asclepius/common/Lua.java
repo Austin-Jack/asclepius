@@ -1,5 +1,6 @@
 package com.asclepius.common;
 
+@Deprecated
 public interface Lua {
     String SECOND_KILL = "local cardid=KEYS[1]; \n" +
             "local sid=KEYS[2];\n" +
