@@ -24,7 +24,7 @@ public class ScheduleController {
 	@GetMapping("/doctor/{dId}/{docId}")
 	public ResultDTO getDoctorSchedule(@PathVariable("dId") Integer dId, @PathVariable("docId") Integer docId) {
 		ResultDTO resultDTO = new ResultDTO();
-		DoctorScheduleDTO doctorSchedule = scheduleService.getScheduleByDocId(dId, docId);
+		DoctorScheduleDTO doctorSchedule = scheduleService.getScheduleByDocId(docId,dId);
 		if (doctorSchedule.getTimes().size() == 0) {
 			resultDTO.setMessage("该医生最近无排班");
 		}

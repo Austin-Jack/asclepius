@@ -9,6 +9,7 @@ import org.springframework.stereotype.Component;
 import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
 import java.io.Serializable;
+import java.time.Duration;
 import java.util.Calendar;
 import java.util.List;
 
@@ -22,7 +23,6 @@ import static com.asclepius.common.Constants.*;
  */
 @Component
 public class InitRedis {
-
 
 
 	@Resource
@@ -46,10 +46,13 @@ public class InitRedis {
 		scheduleExample.createCriteria().andScStartTimeBetween(System.currentTimeMillis() + PREHEAT_TIME,
 				calendar.getTimeInMillis());
 		List<Schedule> schedules = scheduleMapper.selectByExample(scheduleExample);
+		String key;
 		for (Schedule schedule : schedules) {
 			//当没有这样的key时(多机后端 单机redis) 存入这样的hash
-			redisTemplate.opsForHash().putIfAbsent(HASH_KEY_PREFIX + schedule.getsId(), REMAIN_FILED_KEY, schedule.getNum());
-			redisTemplate.opsForHash().putIfAbsent(HASH_KEY_PREFIX+ schedule.getsId(), TOTAL_FILED_KEY, schedule.getNum());
+			key = HASH_KEY_PREFIX + schedule.getsId();
+			if (redisTemplate.opsForHash().putIfAbsent(key, REMAIN_FILED_KEY, schedule.getNum())) {
+				redisTemplate.expire(key, Duration.ofDays(SCHEDULE_SCOPE));
+			}
 		}
 	}
 }
