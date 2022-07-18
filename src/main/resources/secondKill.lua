@@ -2,6 +2,7 @@
 -- 例如cardId = cId_10 key = sid_102
 local hashKey = KEYS[1]
 local filedKey = KEYS[2]
+local appNum
 -- 声明一个table变量
 local res = {}
 -- 执行redis命令 查看该cid是否已经存在于该班次的hash中
@@ -19,15 +20,15 @@ if remain == nil or tonumber(remain) <= 0 then
     return res
     --  其他情况则执行抢号操作
 else
-    local total = redis.call('HGET', hashKey, 'total')
     -- 将sid_102对应的剩余数减一 得到最新的剩余数
     remain = redis.call('HINCRBY', hashKey, 'remain', -1)
+    appNum = redis.call('HINCRBY', hashKey, 'appNum' , 1)
     -- 	将当前的cid例如10号加入到班次hash中作为key值 value对应其预约号
-    redis.call('HSET', hashKey, filedKey, total - remain)
+    redis.call('HSET', hashKey, filedKey, appNum)
     -- 获取剩余的可抢数量  用于返回给前端
     res[1] = remain
     -- 获取当前这个预约号
-    res[2] = total - remain
+    res[2] = appNum
     -- 返回结果
     return res
 end

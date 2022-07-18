@@ -36,8 +36,9 @@ public class ScheduleService {
 	@Resource
 	DoctorMapper doctorMapper;
 
-
-	public DoctorScheduleDTO getScheduleByDocId(Integer dId, Integer docId) {
+	@Cacheable(value = "schedule", condition = "#dId between {1,23}", sync = true,
+			keyGenerator = "scheduleKeyGenerator", cacheManager = "scheduleCacheManager")
+	public DoctorScheduleDTO getScheduleByDocId(Integer docId, Integer dId) {
 		DoctorScheduleDTO dto = departmentMapperExt.getCliByDid(dId);
 		Doctor doctor = doctorMapper.selectByPrimaryKey(docId);
 		dto.setDocName(doctor.getDocName());
@@ -67,27 +68,21 @@ public class ScheduleService {
 	public String[][] getDepartmentSchedule(Integer dId) {
 		String[][] result = new String[14][];
 		Calendar c1 = Calendar.getInstance(TimeZone.getTimeZone("GMT+8"));
-		c1.set(Calendar.SECOND, 0);
-		c1.set(Calendar.MILLISECOND, 0);
-		c1.set(Calendar.MINUTE, 0);
-		c1.set(Calendar.HOUR_OF_DAY, 8);
+		c1.set(Calendar.HOUR_OF_DAY, MORNING_WORKING_TIME - 1);
 		int i = 0;
 		do {
-			Long start = c1.getTimeInMillis();
-			Long end = start + MORNING_WORK_PERIOD;
+			long start = c1.getTimeInMillis();
+			long end = start + MORNING_WORK_PERIOD;
 			result[i++] = departmentMapperExt.getDepartmentSchedule(dId, start, end).toArray(new String[]{});
 			c1.add(Calendar.DAY_OF_MONTH, 1);
 		} while (i < 7);
-		Calendar c2 = Calendar.getInstance(TimeZone.getTimeZone("GMT+8"));
-		c2.set(Calendar.SECOND, 0);
-		c2.set(Calendar.MILLISECOND, 0);
-		c2.set(Calendar.MINUTE, 0);
-		c2.set(Calendar.HOUR_OF_DAY, 14);
+		c1 = Calendar.getInstance(TimeZone.getTimeZone("GMT+8"));
+		c1.set(Calendar.HOUR_OF_DAY, NOON_WORKING_TIME - 1);
 		do {
-			Long start = c2.getTimeInMillis();
-			Long end = start + MORNING_WORK_PERIOD;
+			long start = c1.getTimeInMillis();
+			long end = start + NOON_WORKING_PERIOD;
 			result[i++] = departmentMapperExt.getDepartmentSchedule(dId, start, end).toArray(new String[]{});
-			c2.add(Calendar.DAY_OF_MONTH, 1);
+			c1.add(Calendar.DAY_OF_MONTH, 1);
 		} while (i < 14);
 		return result;
 	}
