@@ -59,6 +59,19 @@ public class LettuceRedisConfig {
 				.build();
 	}
 
+	@Bean("doctorScheduleCacheManager")
+	public RedisCacheManager doctorScheduleCacheManager(LettuceConnectionFactory connectionFactory) {
+		RedisCacheConfiguration config = RedisCacheConfiguration.defaultCacheConfig()
+				.entryTtl(Duration.ofHours(CACHE_HOURS))   //设置缓存失效时间
+				.serializeValuesWith(RedisSerializationContext.SerializationPair.fromSerializer(new GenericJackson2JsonRedisSerializer()))
+				.disableCachingNullValues();
+
+		return RedisCacheManager
+				.builder(connectionFactory)
+				.cacheDefaults(config)
+				.build();
+	}
+
 	@Bean("defaultRedisCacheManager")
 	@Primary
 	public RedisCacheManager defaultRedisCacheManager(LettuceConnectionFactory connectionFactory) {
