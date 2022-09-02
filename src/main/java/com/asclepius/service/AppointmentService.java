@@ -4,11 +4,9 @@ import com.asclepius.dto.AppointmentDTO;
 import com.asclepius.mapper.AppointmentMapper;
 import com.asclepius.mapper.AppointmentMapperExt;
 import com.asclepius.mapper.CardMapper;
-import com.asclepius.pojo.Appointment;
-import com.asclepius.pojo.AppointmentExample;
+import com.asclepius.mapper.ScheduleMapper;
+import com.asclepius.pojo.*;
 import com.asclepius.dto.AppointmentExtDTO;
-import com.asclepius.pojo.Card;
-import com.asclepius.pojo.CardExample;
 import org.springframework.beans.BeanUtils;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.script.DefaultRedisScript;
@@ -32,6 +30,9 @@ public class AppointmentService {
 
 	@Resource
 	AppointmentMapperExt appointmentMapperExt;
+
+	@Resource
+	ScheduleMapper scheduleMapper;
 
 	@Resource
 	RedisTemplate<String, Integer> redisTemplate;
@@ -69,6 +70,10 @@ public class AppointmentService {
 			appointment.setApNum(Integer.parseInt(String.valueOf(res.get(1))));
 			appointment.setApTime(System.currentTimeMillis());
 			appointmentMapper.insert(appointment);
+			Schedule schedule = new Schedule();
+			schedule.setsId(appointment.getsId());
+			schedule.setNum(Math.toIntExact(result));
+			scheduleMapper.updateByPrimaryKeySelective(schedule);
 		}
 		return result;
 	}

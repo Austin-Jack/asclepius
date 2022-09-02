@@ -36,8 +36,8 @@ public class ScheduleService {
 	@Resource
 	DoctorMapper doctorMapper;
 
-	@Cacheable(value = "schedule", condition = "#dId between {1,23}", sync = true,
-			keyGenerator = "scheduleKeyGenerator", cacheManager = "scheduleCacheManager")
+	@Cacheable(value = "doctorSchedule", condition = "#dId between {1,23}", sync = true,
+			keyGenerator = "scheduleKeyGenerator",cacheManager = "doctorScheduleCacheManager")
 	public DoctorScheduleDTO getScheduleByDocId(Integer docId, Integer dId) {
 		DoctorScheduleDTO dto = departmentMapperExt.getCliByDid(dId);
 		Doctor doctor = doctorMapper.selectByPrimaryKey(docId);
